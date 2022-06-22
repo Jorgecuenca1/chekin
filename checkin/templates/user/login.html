@@ -1,0 +1,32 @@
+
+
+{% block head_content %}
+<title>Inicio de sesión </title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+{% endblock%}
+
+{% block container %}
+
+    {% if error %}
+        <p class="alert alert-danger">{{ error }}</p>
+    {% endif%}
+
+    <form method="POST" action="{% url "login" %}">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="identification" class="col-sm-3 control-label">Cédula</label>
+            <input class="form-control" type="text" placeholder="Cédula" name="username" />
+        </div>
+
+        <div class="form-group">
+             <label for="password" class="col-sm-3 control-label">Contraseña</label>
+            <input class="form-control" type="password" placeholder="Contraseña" name="password" />
+        </div>
+
+        <button class="btn btn-primary btn-block mt-5" type="submit">Inicio de Sesión!</button>
+
+
+    </form>
+
+{% endblock %}
