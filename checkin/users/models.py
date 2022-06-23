@@ -233,6 +233,14 @@ class Eventos(models.Model):
     ventacomida = models.CharField(max_length=10, choices=CHOICES, verbose_name='Venta de comida', null=True, blank=True)
     ventalicor = models.CharField(max_length=10, choices=CHOICES, verbose_name='Venta de Licor', null=True,
                                    blank=True)
+    lugar = models.CharField(max_length=10, verbose_name='Lugar', null=True,
+                                  blank=True)
+    inicio = models.CharField(max_length=10, verbose_name='Horario de inicio', null=True,
+                             blank=True)
+    final = models.CharField(max_length=10, verbose_name='Horario final', null=True,
+                             blank=True)
+    apertura = models.CharField(max_length=10, verbose_name='Apertura', null=True,
+                             blank=True)
     accesodiscapacitados = models.CharField(max_length=10, choices=CHOICES, verbose_name='Acceso a personas con discapacidad', null=True,
                                    blank=True)
     accesoembarazadas = models.CharField(max_length=10, choices=CHOICES, verbose_name='Acceso a embarazadas', null=True,

@@ -125,90 +125,48 @@
              </div>
          </form>
           <div class="col-sm-8">
-             <div class="d-flex center-content-between mb-3">
-                       <img src= "http://127.0.0.1:8000/media/{{evento.image}}" width="65%" />
-                    </div>
                     <div class="d-flex justify-content-between mb-3">
-                        <span class="mr-15 font-weight-bold">Categoría:</span>
-                        <span class="mr-15 font-weight-bold">{{evento.category}}</span>
+                        <h1><span class="mr-15 font-weight-bold">{{evento.title}}</span></h1>
                          </div>
                          <div class="d-flex justify-content-between mb-3">
-                        <span class="mr-15 font-weight-bold">Edad miníma sugerida:</span>
-                        <span class="mr-15 font-weight-bold">{{evento.minimum_age}}</span>
+                        <h3><span class="mr-15 font-weight-bold">{{evento.descripcion}}</span></h3>
+                         </div>
+              <div class="d-flex justify-content-between mb-3">
+                        <h4><span class="mr-15 font-weight-bold">Localidades:</span></h4>
+                         </div>
+                              {% for localidad in localidades%}
+                        <div class="d-flex justify-content-between mb-3">
+
+
+                            <h6><span class="mr-15 font-weight-bold">Localidad: {{localidad.name }} precio: {{ localidad.price }}</span></h6>
+                                <br/>
+
+                         </div>
+                               {% endfor %}
+                         <div class="d-flex justify-content-between mb-3">
+                        <h3><span class="mr-15 font-weight-bold">NO SE HACEN CAMBIOS DE LOCALIDAD, NI DE FECHA UNA VEZ COMPRADAS LAS ENTRADAS.</span></h3>
+
                          </div>
                          <div class="d-flex justify-content-between mb-3">
-                        <span class="mr-15 font-weight-bold">Acomodación:</span>
-                        <span class="mr-15 font-weight-bold">{{evento.acomodacion}}</span>
-                         </div>
-                         <div class="d-flex justify-content-between mb-3">
-                        <span class="mr-15 font-weight-bold">Venta de comida:</span>
-                        <span class="mr-15 font-weight-bold">{{evento.ventacomida}}</span>
-                         </div>
-                         <div class="d-flex justify-content-between mb-3">
-                        <span class="mr-15 font-weight-bold">Venta de licor:</span>
-                        <span class="mr-15 font-weight-bold">{{evento.ventalicor}}</span>
+                        <h3><span class="mr-15 font-weight-bold">{{evento.lugar}}</span></h3>
                          </div>
                           <div class="d-flex justify-content-between mb-3">
-                        <span class="mr-15 font-weight-bold">Acceso a personas con movilidad reducidadr:</span>
-                        <span class="mr-15 font-weight-bold">{{evento.accesodiscapacitados}}</span>
+                         <h6><span class="mr-15 font-weight-bold">{{evento.inicio}}</span></h6>
                          </div>
                           <div class="d-flex justify-content-between mb-3">
-                        <span class="mr-15 font-weight-bold">Acceso a embarazadas:</span>
-                        <span class="mr-15 font-weight-bold">{{evento.accesoembarazadas}}</span>
+                        <h6><span class="mr-15 font-weight-bold">{{evento.final}}</span></h6>
                          </div>
                           <div class="d-flex justify-content-between mb-3">
-                        <span class="mr-15 font-weight-bold">Venta de licor:</span>
-                        <span class="mr-15 font-weight-bold">{{evento.ventalicor}}</span>
+                        <h3><span class="mr-15 font-weight-bold">{{evento.apertura}}</span></h3>
                          </div>
-                         <div class="d-flex justify-content-between mb-3">
-                        <button type="button" class="btn btn-primary" onclick="location.href='http://127.0.0.1:8000/puntoventa/{{evento.id}}'"  >Punto de venta</button>
-
-                         </div>
-                          <div class="col-md-6">
-               <tr><th><label for="id_tipocomprobante"><span class="mr-15 font-weight-bold">BOletas:</span></label></th><td><select name="tipocomprobante" required id="id_tipocomprobante">
- {% for boleta in boletas %}
 
 
-  <option value={{ boleta.id }}>{{ boleta.price }}</option>
-
-{% endfor %}
-</select></td></tr>
-
-                   </div>
              </div>
          {% endfor %}
-                  <div class="col-sm-12">
-         <table class="table table-striped">
-  <thead>
-    <tr>
-        <th scope="col">id</th>
-      <th scope="col">localidad</th>
-        <th scope="col">price</th>
-    </tr>
-  </thead>
-  <tbody>
-   {% for boleta in boletascars %}
-    <tr>
-        <td>{{boleta.id}}</td>
-      <td>{{boleta.localidad.name}}</td>
-      <td>{{boleta.localidad.price}}</td>
-        <td>
-          <a href="{% url 'delete_boleta' id=boleta.id %}">Delete</a></td>
 
-    </tr>
-
-{% endfor %}
-
-    </div>
 
              <div class="col-sm-2">
              </div>
-         <div class="d-flex justify-content-between mb-3">
-                        <button class="btn btn-primary btn-block mt-5" type="submit" value="OK">COMPRAR</button>
-
-
-
-                    </div>
 
          <div class="col-sm-12">
          <table class="table table-striped">
@@ -241,8 +199,8 @@
 
 
 <div class="row justify-content-center" style="background-color: #3366CC;">
-        <br/>
-        <br/>
+       <h3><span class="mr-15 font-weight-bold" style="color: #FFFFFF;">LOCALIDADES</span></h3>
+
 
 </div>
 
