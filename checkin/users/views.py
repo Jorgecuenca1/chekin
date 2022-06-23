@@ -17,7 +17,7 @@ def listaboleta(request):
 def delete_boleta(request, id):
     boleta = get_object_or_404(Boleta, id=id)
     boleta.delete()
-    return redirect('/')
+    return redirect('/carshop')
 def compra(request, id):
     carshop = get_object_or_404(CarShop, id=id)
     carshop.delete()
@@ -29,17 +29,19 @@ def puntoventa(request, id):
 
     return render(request, 'user/puntoventa.html',{ 'eventos': eventos,'puntoventas':puntoventas, })
 
-
+def carshop(request):
+    user = request.user
+    profile = Profile.objects.get(user=user)
+    cars = profile.car
+    boletascars = cars.boleta.all()
+    carshop = profile.car.id
+    return render(request, 'user/carshop.html',{'carshop':carshop,'boletascars': boletascars, })
 def eventos(request, id):
     eventos = Eventos.objects.filter(id=id,created__lte=timezone.now()).order_by('created')
     evento = Eventos.objects.get(pk=id)
     localidades = evento.localidad.all()
     evento = Eventos.objects.get(pk=id)
     boletas = evento.boleta.all()
-    user = request.user
-    profile = Profile.objects.get(user=user)
-    cars = profile.car
-    boletascars = cars.boleta.all()
     if request.method == 'POST':
         profile = Profile()
         user = request.user
@@ -55,7 +57,7 @@ def eventos(request, id):
             car.boleta.add(boleta)
         Profile.objects.filter(user=user).update(car=car)
         return redirect(f"/eventos/{id}")
-    return render(request, 'user/eventos.html',{'boletascars': boletascars, 'eventos': eventos,'boletas':boletas,'localidades':localidades,})
+    return render(request, 'user/eventos.html',{ 'eventos': eventos,'boletas':boletas,'localidades':localidades,})
 def inicio(request):
     eventos = Eventos.objects.filter(created__lte=timezone.now()).order_by('created')
 
