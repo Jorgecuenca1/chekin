@@ -1,4 +1,4 @@
-
+{% extends "base.html" %}
 
 {% block head_content %}
 <title>Inicio de sesión </title>
@@ -25,6 +25,9 @@
         </div>
 
         <button class="btn btn-primary btn-block mt-5" type="submit">Inicio de Sesión!</button>
+    <a href="/password_reset" class="btn btn-primary btn-block mt-5" role="button">¿Has olvidado tu contraseña?</a>
+        <a href="/" class="btn btn-primary btn-block mt-5" role="button">Registrarse</a>
+
 
 
     </form>

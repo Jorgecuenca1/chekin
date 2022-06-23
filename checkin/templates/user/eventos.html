@@ -57,7 +57,9 @@
           {% for evento in eventos %}
   <div class="col-sm-12">
      <div class="row ">
-         <div class="col-sm-4">
+         <div class="col-sm-1">
+             </div>
+         <div class="col-sm-3">
              <div class="d-flex center-content-between mb-3">
                        <img src= "http://127.0.0.1:8000/media/{{evento.image}}" width="65%" />
                     </div>
@@ -100,7 +102,7 @@
               <form action="{% url 'eventos' id=evento.id%}" method="POST">
         {% csrf_token %}
                           <div class="col-md-6">
-               <tr><th><label for="localidad"><span class="mr-15 font-weight-bold">BOletas:</span></label></th><td><select name="localidad" required id="localidad">
+               <tr><th><label for="localidad"><span class="mr-15 font-weight-bold">COMPRA DE BOLETAS:</span></label></th><td><select name="localidad" required id="localidad">
  {% for localidad in localidades%}
 
 
@@ -108,14 +110,9 @@
 
 {% endfor %}
 </select></td></tr>
-
+<input class="form-control"  type="number" placeholder="cantidad" name="cantidad" required="false" />
                    </div>
-                   <div class="d-flex justify-content-between mb-3">
-                        <span class="mr-15 font-weight-bold">Cantidad:</span>
-                        <div class="form-group">
-            <input class="form-control" type="text" placeholder="cantidad" name="cantidad" required="false" />
-        </div>
-                    </div>
+
              <div class="d-flex justify-content-between mb-3">
                         <button class="btn btn-primary btn-block mt-5" type="submit" value="OK">Enviar</button>
 
@@ -124,7 +121,9 @@
                     </div>
              </div>
          </form>
-          <div class="col-sm-8">
+         <div class="col-sm-1">
+             </div>
+          <div class="col-sm-7">
                     <div class="d-flex justify-content-between mb-3">
                         <h1><span class="mr-15 font-weight-bold">{{evento.title}}</span></h1>
                          </div>
@@ -165,10 +164,11 @@
          {% endfor %}
 
 
-             <div class="col-sm-2">
+             <div class="col-sm-1">
              </div>
-
-         <div class="col-sm-12">
+        <div class="col-sm-1">
+             </div>
+         <div class="col-sm-8">
          <table class="table table-striped">
   <thead>
     <tr>
