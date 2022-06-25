@@ -103,7 +103,26 @@
     <div id="paypal-button-container"></div>
     <script>
 
+ function getCookie(name) {
 
+            const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                             fetch("http://127.0.0.1:8000/api/", {
+                    method: 'POST',
+                    credentials: 'same-origin',
+                    headers:{
+                        'Content-Type' : 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest', //Necessary to work with request.is_ajax()
+                        'X-CSRFToken': csrftoken,
+                },
+                    body: JSON.stringify({'sucess':name}) //JavaScript object of data to POST
+                })
+                .then(response => {
+                        return response.json() //Convert response to JSON
+                })
+                .then(data => {
+                //Perform actions with the response data from the view
+                })
+        }
       paypal.Buttons({
         // Sets up the transaction when a payment button is clicked
         createOrder: (data, actions) => {
@@ -115,6 +134,7 @@
             }]
           });
         },
+
         // Finalize the transaction after payer approval
         onApprove: (data, actions) => {
           return actions.order.capture().then(function(orderData) {
@@ -122,24 +142,7 @@
             console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
             const transaction = orderData.purchase_units[0].payments.captures[0];
             alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
-             var myHeaders = new Headers();
-                myHeaders.append("Content-Type", "application/json");
-
-                var raw = JSON.stringify({
-                  "status": "completado"
-                });
-
-                var requestOptions = {
-                  method: 'POST',
-                  headers: myHeaders,
-                  body: raw,
-                  redirect: 'follow'
-                };
-
-                fetch("https://prueba.goldcheckin.com/api/", requestOptions)
-                  .then(response => response.text())
-                  .then(result => console.log(result))
-                  .catch(error => console.log('error', error));
+             getCookie(transaction.status)
             // When ready to go live, remove the alert and show a success message within this page. For example:
             // const element = document.getElementById('paypal-button-container');
             // element.innerHTML = '<h3>Thank you for your payment!</h3>';
