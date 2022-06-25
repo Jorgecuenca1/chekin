@@ -18,7 +18,6 @@ from django.conf import settings
 from django.contrib import admin
 from users import views as users_views
 from django.urls import path
-
 from django.conf.urls.static import static
 
 
@@ -29,7 +28,12 @@ urlpatterns = [
     path('puntoventa/<int:id>/', users_views.puntoventa, name='puntoventa'),
     path('listaboleta', users_views.listaboleta, name='listaboleta'),
     path('carshop', users_views.carshop, name='carshop'),
+    path('checkout/', users_views.checkout, name='checkout'),
+    path('process-payment/', users_views.process_payment, name='process_payment'),
+    path('payment-done/', users_views.payment_done, name='payment_done'),
+    path('payment-cancelled/', users_views.payment_canceled, name='payment_cancelled'),
     path('signup', users_views.signup, name='signup'),
     path('login', users_views.login_view, name='login'),
     path('boleta/<int:id>/delete', users_views.delete_boleta, name='delete_boleta'),
+    path('api/',users_views.check, name='check'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -262,3 +262,17 @@ class Eventos(models.Model):
     class Meta:
         verbose_name = 'Evento'
         verbose_name_plural= 'Eventos'
+
+class Check(models.Model):
+    sucess = models.CharField(max_length=10, verbose_name='satisfactorio', null=True,
+                             blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+
+
+    def __str__(self):
+        return self.sucess
+
+    class Meta:
+        verbose_name = 'Revisar'
+        verbose_name_plural= 'Revisados'

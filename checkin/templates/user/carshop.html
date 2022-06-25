@@ -79,19 +79,74 @@
 {% endfor %}
 
     </div>
-
+{% for carshop in carshop %}
+        <form action="{% url 'process_payment' %}" method="POST">
+            {% csrf_token %}
              <div class="col-sm-2">
                     <div class="d-flex justify-content-between mb-3">
-                        <button class="btn btn-primary btn-block mt-5" type="submit" value="OK">COMPRAR</button>
+                        <button class="btn btn-primary btn-block mt-5" type="submit" value="OK">Enviar</button>
+                        <a >comprar</a>
 
 
 
                     </div>
              </div>
-
+            </form>
+{% endfor %}
 
 
  </div>
 
+ <!-- Replace "test" with your own sandbox Business account app client ID -->
+    <script src="https://www.paypal.com/sdk/js?client-id=AXXvtzlLLe5NDpGIgl9gvAoH5dElePKYjk9DEVgC3xT5Mp-2EzoE8eMTthUt1CgP-zPCLbvF2Zx0F4Yz&currency=USD"></script>
+    <!-- Set up a container element for the button -->
+    <div id="paypal-button-container"></div>
+    <script>
+
+
+      paypal.Buttons({
+        // Sets up the transaction when a payment button is clicked
+        createOrder: (data, actions) => {
+          return actions.order.create({
+            purchase_units: [{
+              amount: {
+                value: '0.1' // Can also reference a variable or function
+              }
+            }]
+          });
+        },
+        // Finalize the transaction after payer approval
+        onApprove: (data, actions) => {
+          return actions.order.capture().then(function(orderData) {
+            // Successful capture! For dev/demo purposes:
+            console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+            const transaction = orderData.purchase_units[0].payments.captures[0];
+            alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
+             var myHeaders = new Headers();
+                myHeaders.append("Content-Type", "application/json");
+
+                var raw = JSON.stringify({
+                  "status": "completado"
+                });
+
+                var requestOptions = {
+                  method: 'POST',
+                  headers: myHeaders,
+                  body: raw,
+                  redirect: 'follow'
+                };
+
+                fetch("http://127.0.0.1:8000/api/", requestOptions)
+                  .then(response => response.text())
+                  .then(result => console.log(result))
+                  .catch(error => console.log('error', error));
+            // When ready to go live, remove the alert and show a success message within this page. For example:
+            // const element = document.getElementById('paypal-button-container');
+            // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+            // Or go to another URL:  actions.redirect('thank_you.html');
+          });
+        }
+      }).render('#paypal-button-container');
+    </script>
 </body>
 </html>

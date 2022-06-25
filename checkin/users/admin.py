@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Country, Region, City, Profile, Eventos, Etapa, Localidad, Category, Puntosventa, Boleta, CarShop
+from .models import Country, Region, City, Profile, Eventos, Etapa, Localidad, Category, Puntosventa, Boleta, CarShop, \
+    Check
 from import_export.admin import ImportExportModelAdmin
 
 # Register your models here.
@@ -48,6 +49,15 @@ class CityAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     )
     suit_form_tabs = (
         ('general', 'Nuevo municipio'),
+    )
+@admin.register(Check)
+class CheckAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+    list_display = ('id', 'sucess',)
+    list_filter = ('sucess', )
+    search_fields = ('sucess',)
+
+    suit_form_tabs = (
+        ('general', 'Nueva sucess'),
     )
 @admin.register(CarShop)
 class CarShopAdmin(ImportExportModelAdmin, admin.ModelAdmin):
