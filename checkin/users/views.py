@@ -115,7 +115,6 @@ class check(APIView):
         return Check.objects.all()
 
     def post(self, request, *args, **kwargs):
-        check = request.data
         serializer = CheckSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
