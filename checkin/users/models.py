@@ -271,7 +271,7 @@ class Check(models.Model):
 
 
     def __str__(self):
-        return self.sucess
+        return str(self.sucess) or ''
 
     class Meta:
         verbose_name = 'Revisar'
