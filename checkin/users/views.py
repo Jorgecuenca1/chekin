@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.db.utils import IntegrityError
 from django.views.decorators.csrf import csrf_exempt
 
-from .models import Profile, Localidad, Boleta, CarShop, Check
+from .models import Profile, Localidad, Boleta, CarShop, Check, Category
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.contrib.auth import login as auth_login, login
@@ -147,8 +147,9 @@ def eventos(request, id):
     return render(request, 'user/eventos.html',{ 'eventos': eventos,'boletas':boletas,'localidades':localidades,})
 def inicio(request):
     eventos = Eventos.objects.filter(created__lte=timezone.now()).order_by('created')
+    categorias = Category.objects.filter(created__lte=timezone.now()).order_by('created')
 
-    return render(request, 'user/inicio.html', { 'eventos': eventos, })
+    return render(request, 'user/inicio.html', { 'eventos': eventos,'categorias': categorias, })
 
 def signup(request):
     """Sign up view."""
