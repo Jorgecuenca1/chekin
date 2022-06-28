@@ -71,28 +71,20 @@
         <td>{{boleta.id}}</td>
       <td>{{boleta.localidad.name}}</td>
       <td>{{boleta.localidad.price}}</td>
+
         <td>
           <a href="{% url 'delete_boleta' id=boleta.id %}"><img src="{% static "img/trash.png" %}" class="img-fluid rounded mx-auto d-block pb-4" style="max-width: 2%;"></a></td>
+{% endfor %}
+        <td>TOTAL: {{suma}}</td>
 
     </tr>
 
-{% endfor %}
+
 
     </div>
-{% for carshop in carshop %}
-        <form action="{% url 'process_payment' %}" method="POST">
-            {% csrf_token %}
-             <div class="col-sm-2">
-                    <div class="d-flex justify-content-between mb-3">
-                        <button class="btn btn-primary btn-block mt-5" type="submit" value="OK">Enviar</button>
-                        <a >comprar</a>
 
 
 
-                    </div>
-             </div>
-            </form>
-{% endfor %}
 
 
  </div>

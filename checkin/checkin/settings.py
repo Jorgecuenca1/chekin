@@ -150,7 +150,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 PAYPAL_RECEIVER_EMAIL = 'youremail@mail.com'
 
 PAYPAL_TEST = True
-
+LOGIN_URL= '/login'
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

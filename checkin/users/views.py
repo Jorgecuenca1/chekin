@@ -1,10 +1,13 @@
 from django.shortcuts import render
 from django.db.utils import IntegrityError
 from django.views.decorators.csrf import csrf_exempt
-
+from django.db.models import Sum
 from .models import Profile, Localidad, Boleta, CarShop, Check, Category
 from django.shortcuts import render, redirect
 from django.utils import timezone
+from django.db.models import Q
+
+
 from django.contrib.auth import login as auth_login, login
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
@@ -89,23 +92,44 @@ def puntoventa(request, id):
     puntoventas = evento.puntosventa.all()
 
     return render(request, 'user/puntoventa.html',{ 'eventos': eventos,'puntoventas':puntoventas, })
-@login_required
+@login_required(login_url='/login')
 def carshop(request):
     user = request.user
-    profile = Profile.objects.get(user=user)
-    cars = profile.car
-    boletascars = cars.boleta.all()
-    carid = profile.car.id
-    carshop = CarShop.objects.filter(id=carid).order_by('-id')
-    if request.method == 'POST':
-        user = request.user
+    if user == None:
+        return redirect('/inicio')
+    else:
         profile = Profile.objects.get(user=user)
         cars = profile.car
+        boletascars = cars.boleta.all()
+        carid = profile.car.id
+        carshop = CarShop.objects.filter(id=carid).order_by('-id')
+        cars = profile.car
+        boletascars = cars.boleta.all()
+        suma = 0
+        for element in boletascars:
+            print(element.id)
+            suma = suma + int(element.localidad.price)
+        suma = str(suma)
+        if request.method == 'POST':
+            profile = Profile()
+            user = request.user
+            profile = Profile.objects.get(user=user)
+            user = request.user
 
-        request.session['card_id'] = cars.id
-        return redirect('process_payment')
+            if profile.car == None:
+                car = CarShop.objects.create()
+            else:
+                car = profile.car
+            cantidad = int(request.POST['cantidad'])
+            for x in range(cantidad):
+                localidad = localidad = Localidad.objects.get(id=request.POST['localidad'])
+                boleta = Boleta.objects.create(
+                    localidad=Localidad.objects.get(id=request.POST['localidad'], price=localidad.price))
+                car.boleta.add(boleta)
+            Profile.objects.filter(user=user).update(car=car)
+            return redirect(f"/carshop")
 
-    return render(request, 'user/carshop.html',{'carshop':carshop,'boletascars': boletascars, })
+    return render(request, 'user/carshop.html',{'carshop':carshop,'boletascars': boletascars, 'suma': suma,  })
 
 class check(APIView):
     """
@@ -116,31 +140,48 @@ class check(APIView):
 
     def post(self, request, *args, **kwargs):
         serializer = CheckSerializer(data=request.data)
+        general_data = request.data
         if serializer.is_valid():
             serializer.save()
+            if serializer.data['sucess'] == 'COMPLETED':
+                user = request.user
+                profile = Profile.objects.get(user=user)
+                cars = profile.car
+                boletascars = cars.boleta.all()
+                for element in boletascars:
+                    print(element.id)
+                    profile.boleta.add(element.id)
+                carnew = CarShop.objects.create()
+                profile.historialcar.add(cars)
+                Profile.objects.filter(id=profile.id).update(car=carnew)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
 def eventos(request, id):
+
     eventos = Eventos.objects.filter(id=id,created__lte=timezone.now()).order_by('created')
     evento = Eventos.objects.get(pk=id)
     localidades = evento.localidad.all()
     evento = Eventos.objects.get(pk=id)
     boletas = evento.boleta.all()
+
     if request.method == 'POST':
         profile = Profile()
         user = request.user
         profile = Profile.objects.get(user=user)
+        user = request.user
+
         if profile.car == None:
             car = CarShop.objects.create()
         else:
             car = profile.car
         cantidad = int(request.POST['cantidad'])
         for x in range(cantidad):
+            localidad = localidad=Localidad.objects.get(id=request.POST['localidad'])
             boleta = Boleta.objects.create(
-                localidad=Localidad.objects.get(id=request.POST['localidad']))
+                localidad=Localidad.objects.get(id=request.POST['localidad'],price= localidad.price))
             car.boleta.add(boleta)
         Profile.objects.filter(user=user).update(car=car)
         return redirect(f"/eventos/{id}")
@@ -148,7 +189,16 @@ def eventos(request, id):
 def inicio(request):
     eventos = Eventos.objects.filter(created__lte=timezone.now()).order_by('created')
     categorias = Category.objects.filter(created__lte=timezone.now()).order_by('created')
+    query = request.GET.get('search_box')
 
+    if query:
+        eventos = Eventos.objects.all()
+        query = query.split()
+        q_obj = Q(
+            *[Q(('title__icontains', item)) for item in query],
+            _connector=Q.OR
+        )
+        eventos = Eventos.objects.filter(q_obj)
     return render(request, 'user/inicio.html', { 'eventos': eventos,'categorias': categorias, })
 
 def signup(request):

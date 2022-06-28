@@ -186,7 +186,8 @@ class CarShop(models.Model):
         verbose_name_plural = 'Carros de compra'
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.PROTECT, blank=True, null=True)
-    car = models.OneToOneField(CarShop, on_delete=models.PROTECT, blank=True, null=True)
+    car = models.OneToOneField(CarShop,on_delete=models.PROTECT, blank=True, null=True)
+    historialcar = models.ManyToManyField(CarShop, related_name='Historial', blank=True, null=True)
     email = models.EmailField(max_length=200, verbose_name='Correo electronico', blank=True, null=True)
     first_name = models.CharField(max_length=200, verbose_name='Nombres', blank=True)
     last_name = models.CharField(max_length=200, verbose_name='Apellidos', blank=True)
