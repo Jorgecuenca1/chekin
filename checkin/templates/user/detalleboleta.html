@@ -1,0 +1,303 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from themes.themewild.com/ticket/event-ticket.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 29 Jun 2022 16:31:45 GMT -->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<title>Ticket  - Online Ticket Booking Website HTML5 Template</title>
+
+<link rel="shortcut icon" href="{% static "assets/img/favicon.png" %}" type="image/x-icon">
+<link rel="stylesheet" href="{% static "assets/css/bootstrap.min.css"%}">
+<link rel="stylesheet" href="{% static "assets/css/fontawesome.min.css"%}">
+<link rel="stylesheet" href="{% static "assets/css/animate.css"%}">
+<link rel="stylesheet" href="{% static "assets/css/magnific-popup.css"%}">
+<link rel="stylesheet" href="{% static "assets/css/odometer.css"%}">
+<link rel="stylesheet" href="{% static "assets/css/owl.carousel.min.css"%}">
+<link rel="stylesheet" href="{% static "assets/css/owl.theme.default.min.css"%}">
+<link rel="stylesheet" href="{% static "assets/css/nice-select.css"%}">
+<link rel="stylesheet" href="{% static "assets/css/jquery.animatedheadline.css"%}">
+<link rel="stylesheet" href="{% static "assets/css/style.css"%}">
+</head>
+<body>
+
+<div class="preloader">
+<div class="preloader-inner">
+<div class="preloader-icon">
+<span></span>
+<span></span>
+</div>
+</div>
+</div>
+
+
+<div class="overlay"></div>
+<a href="#" class="scrollToTop">
+<i class="fal fa-long-arrow-alt-up"></i>
+</a>
+
+
+<header class="header-section">
+<div class="container">
+<div class="header-wrapper">
+<div class="logo">
+<a href="index-2.html">
+<img src="{% static "assets/img/logo/logo.png" %}" alt="logo">
+</a>
+</div>
+<ul class="menu">
+
+<li>
+ <a href="/">Inicio</a>
+</li>
+ <li>
+<a href="/listaboleta" >Boletas</a>
+</li>
+ <li>
+<a href="/carshop" >Compra</a>
+</li>
+ <li>
+<a href="/signup" >Registro</a>
+</li>
+<li class="header-button pr-0">
+<a href="/login">Iniciar sesión</a>
+</li>
+</ul>
+<div class="header-bar d-lg-none">
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+</div>
+</header>
+
+
+<section class="details-banner event-details-banner hero-area seat-plan-banner" style="background:url('assets/img/banner/banner-2.jpg')">
+<div class="container">
+<div class="details-banner-wrapper">
+<div class="details-banner-content style-two">
+<h3 class="title"><span class="d-block">Learning</span>
+<span class="d-block">Conference -2021</span></h3>
+<div class="tags">
+<span>290 Private Lane Street, New York, USA</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+
+<section class="page-title bg-one">
+<div class="container">
+<div class="page-title-area">
+<div class="item md-order-1">
+<a href="#0" class="custom-button back-button">
+<i class="fal fa-reply"></i>change plan
+</a>
+</div>
+<div class="item date-item">
+<span class="date">FRI, APR 15 2021</span>
+</div>
+<div class="item">
+<small>TIME LEFT</small>
+<span class="h4 font-weight-bold">09:00</span>
+</div>
+</div>
+</div>
+</section>
+
+
+<section class="pricing padding-top padding-bottom">
+<div class="container">
+<div class="section-header-3">
+<span class="cate">pricing</span>
+<h2 class="title">choose your plan</h2>
+<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
+</div>
+<div class="row">
+    <div class="col-lg-4">
+
+</div>
+ {% for boleta in boletas %}
+<div class="col-lg-4">
+<div class="pricing-single">
+<div class="pricing-header">
+<div class="pricing-thumb">
+<i class="fal fa-ticket-alt"></i>
+</div>
+<div class="pricing-title">
+<h2>Precio: <small>${{boleta.localidad.price}}</small></h2>
+<h5>Pagada</h5>
+</div>
+</div>
+<div class="pricing-content">
+<ul class="pricing-list">
+ <li><i class="fal fa-check"></i>Evento: </li>
+<li><i class="fal fa-check"></i>{{boleta.localidad.evento}}</li>
+<li><i class="fal fa-check"></i>Localidad:</li>
+<li><i class="fal fa-check"></i>{{boleta.localidad.price}}</li>
+
+</ul>
+<button class="pricing-btn" onclick="location.href='detalleboleta/{{boleta.id}}'"  >VER TICKET</button>
+</div>
+</div>
+</div>
+ {% endfor %}<div class="col-lg-4">
+
+</div>
+</div>
+</div>
+</div>
+</section>
+
+
+<footer class="footer-section">
+
+<div class="newsletter-section">
+<div class="container">
+<div class="newsletter-container">
+<div class="newsletter-wrapper">
+<h5 class="cate">subscribe now</h5>
+<h3 class="title">to get latest update</h3>
+<form class="newsletter-form">
+<input type="text" placeholder="Your Email Address">
+<button type="submit">subscribe</button>
+</form>
+<p>We send you latest update and news to your email</p>
+</div>
+</div>
+</div>
+</div>
+
+<div class="footer-section-box">
+<div class="container">
+<div class="footer-top">
+<div class="logo">
+<a href="index-1.html">
+<img src="{% static "assets/img/logo/logo.png" %}" alt="footer">
+</a>
+</div>
+<ul class="social-icons">
+<li>
+<a href="#">
+<i class="fab fa-facebook-f"></i>
+</a>
+</li>
+<li>
+<a href="#" class="active">
+<i class="fab fa-twitter"></i>
+</a>
+</li>
+<li>
+<a href="#">
+<i class="fab fa-pinterest-p"></i>
+</a>
+</li>
+<li>
+<a href="#">
+<i class="fab fa-google"></i>
+</a>
+</li>
+<li>
+<a href="#">
+<i class="fab fa-instagram"></i>
+</a>
+</li>
+</ul>
+</div>
+</div>
+<div class="container">
+<div class="footer-middle">
+<div class="row">
+<div class="col-lg-3">
+<h5 class="footer-middle-title">Company</h5>
+<p class="pb-4 footer-text">
+There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour.
+</p>
+</div>
+<div class="col-lg-3">
+<h5 class="footer-middle-title">Important Link</h5>
+<div class="footer-middle-link">
+<a href="#">About Us</a>
+<a href="#">Contact</a>
+<a href="#">Faq</a>
+<a href="#">Terms & Conditions</a>
+<a href="#">Privacy Policy</a>
+<a href="#">Help</a>
+</div>
+</div>
+<div class="col-lg-3">
+<h5 class="footer-middle-title">Quick Browse</h5>
+<div class="footer-middle-link">
+<a href="#">Support</a>
+<a href="#">Blog</a>
+<a href="#">Movies</a>
+<a href="#">Events</a>
+<a href="#">Sports</a>
+<a href="#">Feedback</a>
+</div>
+</div>
+ <div class="col-lg-3">
+<h5 class="footer-middle-title">Download</h5>
+<p class="footer-text">There are many variations of passages of Lorem Ipsum</p>
+<div class="footer-middle-download">
+<a href="#"><img src="{% static "assets/img/app/app_store.jpg" %}" alt=""></a>
+<a href="#"><img src="{% static "assets/img/app/google_play.jpg" %}" alt=""></a>
+<a href="#"> <img src="{% static "assets/img/app/windows.jpg" %}" alt=""></a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="container">
+<div class="footer-bottom">
+<div class="footer-bottom-area">
+<div class="left">
+<p>Copyright © 2021.All Rights Reserved By <a href="#">Ticket</a>.</p>
+</div>
+<ul class="links">
+<li>
+<a href="#">About</a>
+</li>
+<li>
+<a href="#">Terms Of Use</a>
+</li>
+<li>
+<a href="#">Privacy Policy</a>
+</li>
+<li>
+<a href="#">FAQ</a>
+</li>
+<li>
+<a href="#">Feedback</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</footer>
+
+
+<script src="{% static "assets/js/jquery-3.6.0.min.js" %}"></script>
+<script src="{% static "assets/js/modernizr-3.6.0.min.js" %}"></script>
+<script src="{% static "assets/js/plugins.js" %}"></script>
+<script src="{% static "assets/js/bootstrap.bundle.min.js" %}"></script>
+<script src="{% static "assets/js/heandline.js" %}"></script>
+<script src="{% static "assets/js/isotope.pkgd.min.js" %}"></script>
+<script src="{% static "assets/js/magnific-popup.min.js" %}"></script>
+<script src="{% static "assets/js/owl.carousel.min.js" %}"></script>
+<script src="{% static "assets/js/wow.min.js" %}"></script>
+<script src="{% static "assets/js/countdown.min.js" %}"></script>
+<script src="{% static "assets/js/odometer.min.js" %}"></script>
+<script src="{% static "assets/js/viewport.jquery.js" %}"></script>
+<script src="{% static "assets/js/nice-select.js" %}"></script>
+<script src="{% static "assets/js/main.js" %}"></script>
+</body>
+
+<!-- Mirrored from themes.themewild.com/ticket/event-ticket.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 29 Jun 2022 16:31:45 GMT -->
+</html>

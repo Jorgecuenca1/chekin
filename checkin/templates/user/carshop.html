@@ -33,6 +33,7 @@
 
          <div class="col-md-5">
             <a href="/" class="btn btn-dark" type="button" style="background-color: #343131;">Inicio</a>
+             <a href="/listaboleta" class="btn btn-dark" type="button" style="background-color: #343131;">Boletas</a>
                         <a href="/carshop" class="btn btn-dark" type="button" style="background-color: #343131;">Compra</a>
              <a href="/signup" class="btn btn-dark" type="button" style="background-color: #343131;">Registro</a>
                <a href="/login" class="btn btn-dark" type="button" style="background-color: #343131;">Iniciar sesión</a>
@@ -98,7 +99,7 @@
  function getCookie(name) {
 
             const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-                    fetch("https://prueba.goldcheckin.com/api/", {
+                    fetch("http://127.0.0.1:8000/api/", {
                     method: 'POST',
                     credentials: 'same-origin',
                     headers:{

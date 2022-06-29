@@ -162,6 +162,8 @@ class Boleta(models.Model):
                                   blank=True, null=True)
     comprada = models.CharField(max_length=10, choices=CHOICES, verbose_name='Comprada', null=True,
                                             blank=True)
+    code = models.ImageField(verbose_name='Imagen de la firma del usuario', upload_to='boleta/code', blank=True,
+                              null=True)
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -236,6 +238,9 @@ class Eventos(models.Model):
                                    blank=True)
     lugar = models.CharField(max_length=10, verbose_name='Lugar', null=True,
                                   blank=True)
+    country = models.ForeignKey(Country, verbose_name='País', on_delete=models.CASCADE, blank=True, null=True)
+    state = models.ForeignKey(Region, verbose_name='Departamento', on_delete=models.PROTECT, blank=True, null=True)
+    city = models.ForeignKey(City, verbose_name='Municipio', on_delete=models.PROTECT, blank=True, null=True)
     inicio = models.CharField(max_length=10, verbose_name='Horario de inicio', null=True,
                              blank=True)
     final = models.CharField(max_length=10, verbose_name='Horario final', null=True,

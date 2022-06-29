@@ -4,3 +4,7 @@ Pillow
 django-paypal
 djangorestframework
 django-cors-headers
+python-barcode
+barcode
+qrcode
+pillow

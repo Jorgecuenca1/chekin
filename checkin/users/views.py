@@ -6,7 +6,13 @@ from .models import Profile, Localidad, Boleta, CarShop, Check, Category
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.db.models import Q
+import qrcode
+from io import BytesIO
 
+import barcode
+from barcode.writer import ImageWriter
+
+from django.core.files.base import ContentFile
 
 from django.contrib.auth import login as auth_login, login
 from django.contrib.auth.models import User
@@ -72,11 +78,13 @@ def checkout(request):
         form = CheckoutForm()
         return render(request, 'ecommerce_app/checkout.html', locals())
 
+
+@login_required(login_url='/login')
 def listaboleta(request):
     user = request.user
     profile = get_object_or_404(Profile,user=user)
     boletas = profile.boleta.all()
-    return render(request, 'user/listaboleta.html', { 'boletas': boletas, })
+    return render(request, 'ticket/event-ticket.html', { 'boletas': boletas, })
 def delete_boleta(request, id):
     boleta = get_object_or_404(Boleta, id=id)
     boleta.delete()
@@ -92,6 +100,46 @@ def puntoventa(request, id):
     puntoventas = evento.puntosventa.all()
 
     return render(request, 'user/puntoventa.html',{ 'eventos': eventos,'puntoventas':puntoventas, })
+
+@login_required(login_url='/login')
+def carshop2(request):
+    user = request.user
+    if user == None:
+        return redirect('/inicio')
+    else:
+        profile = Profile.objects.get(user=user)
+        cars = profile.car
+        boletascars = cars.boleta.all()
+        carid = profile.car.id
+        carshop = CarShop.objects.filter(id=carid).order_by('-id')
+        cars = profile.car
+        boletascars = cars.boleta.all()
+        suma = 0
+        for element in boletascars:
+            print(element.id)
+            suma = suma + int(element.localidad.price)
+        suma = str(suma)
+        if request.method == 'POST':
+            profile = Profile()
+            user = request.user
+            profile = Profile.objects.get(user=user)
+            user = request.user
+
+            if profile.car == None:
+                car = CarShop.objects.create()
+            else:
+                car = profile.car
+            cantidad = int(request.POST['cantidad'])
+            for x in range(cantidad):
+                localidad = localidad = Localidad.objects.get(id=request.POST['localidad'])
+                boleta = Boleta.objects.create(
+                    localidad=Localidad.objects.get(id=request.POST['localidad'], price=localidad.price), price=localidad.price, comprada = 'NO')
+                car.boleta.add(boleta)
+            Profile.objects.filter(user=user).update(car=car)
+            return redirect(f"/carshop2")
+
+    return render(request, 'ticket/event-checkout.html',{'carshop':carshop,'boletascars': boletascars, 'suma': suma,  })
+
 @login_required(login_url='/login')
 def carshop(request):
     user = request.user
@@ -124,12 +172,12 @@ def carshop(request):
             for x in range(cantidad):
                 localidad = localidad = Localidad.objects.get(id=request.POST['localidad'])
                 boleta = Boleta.objects.create(
-                    localidad=Localidad.objects.get(id=request.POST['localidad'], price=localidad.price))
+                    localidad=Localidad.objects.get(id=request.POST['localidad'], price=localidad.price), price=localidad.price, comprada = 'NO')
                 car.boleta.add(boleta)
             Profile.objects.filter(user=user).update(car=car)
             return redirect(f"/carshop")
 
-    return render(request, 'user/carshop.html',{'carshop':carshop,'boletascars': boletascars, 'suma': suma,  })
+    return render(request, 'ticket/event-checkout.html',{'carshop':carshop,'boletascars': boletascars, 'suma': suma,  })
 
 class check(APIView):
     """
@@ -151,13 +199,40 @@ class check(APIView):
                 for element in boletascars:
                     print(element.id)
                     profile.boleta.add(element.id)
+                    Boleta.objects.filter(id=element.id).update(comprada='SI')
                 carnew = CarShop.objects.create()
                 profile.historialcar.add(cars)
                 Profile.objects.filter(id=profile.id).update(car=carnew)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+def eventos2(request, id):
 
+    eventos = Eventos.objects.filter(id=id,created__lte=timezone.now()).order_by('created')
+    evento = Eventos.objects.get(pk=id)
+    localidades = evento.localidad.all()
+    evento = Eventos.objects.get(pk=id)
+    boletas = evento.boleta.all()
+
+    if request.method == 'POST':
+        profile = Profile()
+        user = request.user
+        profile = Profile.objects.get(user=user)
+        user = request.user
+
+        if profile.car == None:
+            car = CarShop.objects.create()
+        else:
+            car = profile.car
+        cantidad = int(request.POST['cantidad'])
+        for x in range(cantidad):
+            localidad = localidad=Localidad.objects.get(id=request.POST['localidad'])
+            boleta = Boleta.objects.create(
+                localidad=Localidad.objects.get(id=request.POST['localidad'],price= localidad.price))
+            car.boleta.add(boleta)
+        Profile.objects.filter(user=user).update(car=car)
+        return redirect(f"/eventos/{id}")
+    return render(request, 'ticket/event-details.html',{ 'eventos': eventos,'boletas':boletas,'localidades':localidades,})
 
 def eventos(request, id):
 
@@ -185,11 +260,12 @@ def eventos(request, id):
             car.boleta.add(boleta)
         Profile.objects.filter(user=user).update(car=car)
         return redirect(f"/eventos/{id}")
-    return render(request, 'user/eventos.html',{ 'eventos': eventos,'boletas':boletas,'localidades':localidades,})
+    return render(request, 'ticket/event-details.html',{ 'eventos': eventos,'boletas':boletas,'localidades':localidades,})
 def inicio(request):
     eventos = Eventos.objects.filter(created__lte=timezone.now()).order_by('created')
     categorias = Category.objects.filter(created__lte=timezone.now()).order_by('created')
     query = request.GET.get('search_box')
+    pais = request.GET.get('filter1')
 
     if query:
         eventos = Eventos.objects.all()
@@ -199,7 +275,22 @@ def inicio(request):
             _connector=Q.OR
         )
         eventos = Eventos.objects.filter(q_obj)
-    return render(request, 'user/inicio.html', { 'eventos': eventos,'categorias': categorias, })
+    return render(request, 'ticket/index.html', { 'eventos': eventos,'categorias': categorias, })
+def inicio2(request):
+    eventos = Eventos.objects.filter(created__lte=timezone.now()).order_by('created')
+    categorias = Category.objects.filter(created__lte=timezone.now()).order_by('created')
+    query = request.GET.get('search_box')
+    pais = request.GET.get('filter1')
+
+    if query:
+        eventos = Eventos.objects.all()
+        query = query.split()
+        q_obj = Q(
+            *[Q(('title__icontains', item)) for item in query],
+            _connector=Q.OR
+        )
+        eventos = Eventos.objects.filter(q_obj)
+    return render(request, 'ticket/index.html', {'eventos': eventos, 'categorias': categorias, })
 
 def signup(request):
     """Sign up view."""
@@ -247,3 +338,23 @@ def login_view(request):
             return render(request, 'user/login.html', {'error': 'Invalid username and password'})
 
     return render(request, 'user/login.html')
+
+def detalleboleta(request, id):
+    user = request.user
+
+    bc = Boleta(id=id)
+
+    upc = barcode.get('upc', '12345678901', writer=ImageWriter())
+
+    i = upc.render()  # <PIL.Image.Image image mode=RGB size=523x280 at 0x7FAE2B471320>
+
+    image_io = BytesIO()
+
+    i.save(image_io, format='PNG')
+
+    image_name = 'test.png'
+
+    bc.code = i
+    profiles = Profile.objects.filter(user=user, created__lte=timezone.now()).order_by('created')
+    boletas = Boleta.objects.filter(id=id).order_by('created')
+    return render(request, 'user/detalleboleta.html', {'boletas': boletas, 'profiles': profiles, })
