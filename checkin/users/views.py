@@ -325,7 +325,6 @@ def signup(request):
         profile.first_name = request.POST['name']
         profile.last_name = request.POST['name']
         profile.email = request.POST['email']
-        profile.identification = request.POST['username']
         profile.last_name = request.POST['last_name']
         profile.save()
 
