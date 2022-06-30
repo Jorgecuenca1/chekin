@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,17 +10,17 @@
 
 <title>Ticket  - Online Ticket Booking Website HTML5 Template</title>
 
-<link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
-<link rel="stylesheet" href="assets/css/bootstrap.min.css">
-<link rel="stylesheet" href="assets/css/fontawesome.min.css">
-<link rel="stylesheet" href="assets/css/animate.css">
-<link rel="stylesheet" href="assets/css/magnific-popup.css">
-<link rel="stylesheet" href="assets/css/odometer.css">
-<link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-<link rel="stylesheet" href="assets/css/owl.theme.default.min.css">
-<link rel="stylesheet" href="assets/css/nice-select.css">
-<link rel="stylesheet" href="assets/css/jquery.animatedheadline.css">
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="shortcut icon" href="{% static  "assets/img/favicon.png" %}" type="image/x-icon">
+<link rel="stylesheet" href="{% static  "assets/css/bootstrap.min.css"%}">
+<link rel="stylesheet" href="{% static  "assets/css/fontawesome.min.css"%}">
+<link rel="stylesheet" href="{% static  "assets/css/animate.css"%}">
+<link rel="stylesheet" href="{% static  "assets/css/magnific-popup.css"%}">
+<link rel="stylesheet" href="{% static  "assets/css/odometer.css"%}">
+<link rel="stylesheet" href="{% static  "assets/css/owl.carousel.min.css"%}">
+<link rel="stylesheet" href="{% static  "assets/css/owl.theme.default.min.css"%}">
+<link rel="stylesheet" href="{% static  "assets/css/nice-select.css"%}">
+<link rel="stylesheet" href="{% static  "assets/css/jquery.animatedheadline.css"%}">
+<link rel="stylesheet" href="{% static  "assets/css/style.css"%}">
 </head>
 <body>
 
@@ -44,7 +45,7 @@
 <div class="header-wrapper">
 <div class="logo">
 <a href="index-2.html">
-<img src="assets/img/logo/logo.png" alt="logo">
+<img src="{% static  "assets/img/logo/logo.png" %}" alt="logo">
 </a>
 </div>
 <ul class="menu">
@@ -216,30 +217,58 @@ register
 </section>
 
 
-<section class="account-section bg_img" data-background="assets/images/account/account-bg.html">
+<section class="account-section bg_img" data-background="{% static  "assets/images/account/account-bg.html">
 <div class="container">
 <div class="padding-top padding-bottom">
 <div class="account-area">
 <div class="section-header-3">
+
+
+            <form class="form-horizontal" role="form" action="{% url 'signup' %}" method="POST">
+                {% csrf_token %}
 <span class="cate">welcome !</span>
 <h2 class="title">Create Account</h2>
 </div>
 <form class="account-form">
 <div class="form-group">
-<label for="name">Name<span>*</span></label>
-<input type="text" placeholder="Enter Your Name" id="name" required>
+<label for="username">Usuario<span>*</span></label>
+<input type="text"  id="username" placeholder="Usuario" name="username"  class="form-control" required>
+</div>
+ <div class="form-group">
+<label for="name">Nombres:<span>*</span></label>
+<input type="text"  d="name" placeholder=" Nombres" name="name" class="form-control" required>
+</div>
+ <div class="form-group">
+<label for="last_name">Apellidos<span>*</span></label>
+<input type="text"  id="last_name" placeholder="Apellidos" name="last_name"  class="form-control"  required>
 </div>
 <div class="form-group">
 <label for="email">Email<span>*</span></label>
-<input type="text" placeholder="Enter Your Email" id="email" required>
+<input type="email" id="email" placeholder="Correo electronico" name="email" class="form-control" required>
+</div>
+ <div class="form-group">
+<label for="identification">Identificación<span>*</span></label>
+<input type="email" id="identification" placeholder="identificacion" name="identification" class="form-control" required>
+</div>
+  <div class="form-group">
+<label for="adress">Dirección<span>*</span></label>
+<input type="email" id="adress" placeholder="identificacion" name="adress" class="form-control" required>
+</div>
+  <div class="form-group">
+<label for="neighbord">Barrio<span>*</span></label>
+<input type="email" id="neighbord" placeholder="Barrio" name="neighbord" class="form-control" required>
+</div>
+  <div class="form-group">
+<label for="phone_number">Identificación<span>*</span></label>
+<input type="email" id="phone_number" placeholder="Telefono" name="phone_number" class="form-control" required>
 </div>
 <div class="form-group">
-<label for="password">Password<span>*</span></label>
-<input type="password" placeholder="Password" id="password" required>
+<label for="passwd">Password<span>*</span></label>
+<input id= "passwd"type="password" placeholder="Contraseña" name="passwd"class="form-control" required>
 </div>
 <div class="form-group">
-<label for="confirm-password">Confirm Password<span>*</span></label>
-<input type="password" placeholder="Re-type Password" id="confirm-password" required>
+<label for="passwd_confirmation">Confirm Password<span>*</span></label>
+<input id= "passwd_confirmation" type="password" placeholder="Confirmar contraseña" name="passwd_confirmation"class="form-control" required>
 </div>
  <div class="form-group checkgroup">
 <input type="checkbox" id="agree" required checked>
@@ -252,11 +281,11 @@ register
 <div class="option">
 Already have an account? <a href="login.html">Login</a>.
 </div>
+ </form>
 </div>
 </div>
 </div>
 </section>
-
 
 <footer class="footer-section">
 
@@ -264,13 +293,9 @@ Already have an account? <a href="login.html">Login</a>.
 <div class="container">
 <div class="newsletter-container">
 <div class="newsletter-wrapper">
-<h5 class="cate">subscribe now</h5>
-<h3 class="title">to get latest update</h3>
-<form class="newsletter-form">
-<input type="text" placeholder="Your Email Address">
-<button type="submit">subscribe</button>
-</form>
-<p>We send you latest update and news to your email</p>
+<a href="/login"><h2>Iniciar sesión</h2></a>
+<h3 class="title">No dudes en comprar tu ticket</h3>
+<p>Disfruta de nuestros eventos</p>
 </div>
 </div>
 </div>
@@ -281,7 +306,7 @@ Already have an account? <a href="login.html">Login</a>.
 <div class="footer-top">
 <div class="logo">
 <a href="index-1.html">
-<img src="assets/img/logo/logo.png" alt="footer">
+<img src="{% static "assets/img/logo/logo.png" %}" alt="footer">
 </a>
 </div>
 <ul class="social-icons">
@@ -317,40 +342,33 @@ Already have an account? <a href="login.html">Login</a>.
 <div class="footer-middle">
 <div class="row">
 <div class="col-lg-3">
-<h5 class="footer-middle-title">Company</h5>
+<h5 class="footer-middle-title">Compañia</h5>
 <p class="pb-4 footer-text">
-There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour.
+Somos una empresa que nacio para mejorar la compra masiva de boletos para eventos a nivel mundial.
 </p>
 </div>
 <div class="col-lg-3">
-<h5 class="footer-middle-title">Important Link</h5>
+<h5 class="footer-middle-title">Link importantes</h5>
 <div class="footer-middle-link">
-<a href="#">About Us</a>
-<a href="#">Contact</a>
-<a href="#">Faq</a> 
-<a href="#">Terms & Conditions</a>
-<a href="#">Privacy Policy</a>
-<a href="#">Help</a>
+<a href="#">Nosotros</a>
+<a href="#">Contactanos</a>
+<a href="#">Faq</a>
+<a href="#">Terminos y condiciones</a>
+<a href="#">Politica de privacidad</a>
+<a href="#">Ayuda</a>
 </div>
 </div>
 <div class="col-lg-3">
-<h5 class="footer-middle-title">Quick Browse</h5>
+<h5 class="footer-middle-title">Busqueda rapida</h5>
 <div class="footer-middle-link">
-<a href="#">Support</a>
-<a href="#">Blog</a>
-<a href="#">Movies</a>
-<a href="#">Events</a>
-<a href="#">Sports</a>
-<a href="#">Feedback</a>
+<a href="#">Eventos</a>
 </div>
 </div>
 <div class="col-lg-3">
-<h5 class="footer-middle-title">Download</h5>
-<p class="footer-text">There are many variations of passages of Lorem Ipsum</p>
+<h5 class="footer-middle-title">GOLD CHECKIN</h5>
+<p class="footer-text"></p>
 <div class="footer-middle-download">
-<a href="#"><img src="assets/img/app/app_store.jpg" alt=""></a>
-<a href="#"><img src="assets/img/app/google_play.jpg" alt=""></a>
-<a href="#"> <img src="assets/img/app/windows.jpg" alt=""></a>
+<a href="#"><img src="{% static "assets/img/app/app_store.jpg" %}" alt=""></a>
 </div>
 </div>
 </div>
@@ -361,45 +379,27 @@ There are many variations of passages of Lorem Ipsum available, but the majority
 <div class="footer-bottom">
 <div class="footer-bottom-area">
 <div class="left">
-<p>Copyright © 2021.All Rights Reserved By <a href="#">Ticket</a>.</p>
+<p> <a href="#">Goldticket</a>.</p>
 </div>
-<ul class="links">
-<li>
-<a href="#">About</a>
-</li>
-<li>
-<a href="#">Terms Of Use</a>
-</li>
-<li>
-<a href="#">Privacy Policy</a>
-</li>
-<li>
-<a href="#">FAQ</a>
-</li>
-<li>
-<a href="#">Feedback</a>
-</li>
-</ul>
 </div>
 </div>
 </div>
 </footer>
 
-
-<script src="assets/js/jquery-3.6.0.min.js"></script>
-<script src="assets/js/modernizr-3.6.0.min.js"></script>
-<script src="assets/js/plugins.js"></script>
-<script src="assets/js/bootstrap.bundle.min.js"></script>
-<script src="assets/js/heandline.js"></script>
-<script src="assets/js/isotope.pkgd.min.js"></script>
-<script src="assets/js/magnific-popup.min.js"></script>
-<script src="assets/js/owl.carousel.min.js"></script>
-<script src="assets/js/wow.min.js"></script>
-<script src="assets/js/countdown.min.js"></script>
-<script src="assets/js/odometer.min.js"></script>
-<script src="assets/js/viewport.jquery.js"></script>
-<script src="assets/js/nice-select.js"></script>
-<script src="assets/js/main.js"></script>
+<script src="{% static  "assets/js/jquery-3.6.0.min.js"%}"></script>
+<script src="{% static  "assets/js/modernizr-3.6.0.min.js"%}"></script>
+<script src="{% static  "assets/js/plugins.js"%}"></script>
+<script src="{% static  "assets/js/bootstrap.bundle.min.js"%}"></script>
+<script src="{% static  "assets/js/heandline.js"%}"></script>
+<script src="{% static  "assets/js/isotope.pkgd.min.js"%}"></script>
+<script src="{% static  "assets/js/magnific-popup.min.js"%}"></script>
+<script src="{% static  "assets/js/owl.carousel.min.js"%}"></script>
+<script src="{% static  "assets/js/wow.min.js"%}"></script>
+<script src="{% static  "assets/js/countdown.min.js"%}"></script>
+<script src="{% static  "assets/js/odometer.min.js"%}"></script>
+<script src="{% static  "assets/js/viewport.jquery.js"%}"></script>
+<script src="{% static  "assets/js/nice-select.js"%}"></script>
+<script src="{% static  "assets/js/main.js"%}"></script>
 </body>
 
 <!-- Mirrored from themes.themewild.com/ticket/register.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 29 Jun 2022 16:32:07 GMT -->

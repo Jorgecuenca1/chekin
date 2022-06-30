@@ -8,7 +8,7 @@ from django.utils import timezone
 from django.db.models import Q
 import qrcode
 from io import BytesIO
-
+from django.db.models import Count
 import barcode
 from barcode.writer import ImageWriter
 
@@ -238,29 +238,38 @@ def eventos(request, id):
 
     eventos = Eventos.objects.filter(id=id,created__lte=timezone.now()).order_by('created')
     evento = Eventos.objects.get(pk=id)
-    localidades = evento.localidad.all()
+    localidades = Localidad.objects.filter(evento=evento,created__lte=timezone.now()).order_by('created')
     evento = Eventos.objects.get(pk=id)
-    boletas = evento.boleta.all()
 
     if request.method == 'POST':
-        profile = Profile()
-        user = request.user
-        profile = Profile.objects.get(user=user)
-        user = request.user
-
-        if profile.car == None:
-            car = CarShop.objects.create()
+        localidad = localidad = Localidad.objects.get(id=request.POST['localidad'])
+        boletas = Boleta.objects.filter(localidad=localidad, created__lte=timezone.now()).order_by('created')
+        suma = 0
+        for element in boletas:
+            suma = suma + 1
+        suma = str(suma)
+        if suma > int(localidad.capacity):
+            return redirect(f"/eventos/{id}")
         else:
-            car = profile.car
-        cantidad = int(request.POST['cantidad'])
-        for x in range(cantidad):
-            localidad = localidad=Localidad.objects.get(id=request.POST['localidad'])
-            boleta = Boleta.objects.create(
-                localidad=Localidad.objects.get(id=request.POST['localidad'],price= localidad.price))
-            car.boleta.add(boleta)
-        Profile.objects.filter(user=user).update(car=car)
-        return redirect(f"/eventos/{id}")
-    return render(request, 'ticket/event-details.html',{ 'eventos': eventos,'boletas':boletas,'localidades':localidades,})
+            queryset = Boleta.objects.annotate(number_of_localidads=Count('localidad'))
+            profile = Profile()
+            user = request.user
+            profile = Profile.objects.get(user=user)
+            user = request.user
+
+            if profile.car == None:
+                car = CarShop.objects.create()
+            else:
+                car = profile.car
+            cantidad = int(request.POST['cantidad'])
+            for x in range(cantidad):
+                localidad = localidad=Localidad.objects.get(id=request.POST['localidad'])
+                boleta = Boleta.objects.create(
+                    localidad=Localidad.objects.get(id=request.POST['localidad'],price= localidad.price))
+                car.boleta.add(boleta)
+            Profile.objects.filter(user=user).update(car=car)
+            return redirect(f"/eventos/{id}")
+    return render(request, 'ticket/event-details.html',{ 'eventos': eventos,'localidades':localidades,})
 def inicio(request):
     eventos = Eventos.objects.filter(created__lte=timezone.now()).order_by('created')
     categorias = Category.objects.filter(created__lte=timezone.now()).order_by('created')
@@ -322,7 +331,7 @@ def signup(request):
 
         return redirect('login')
 
-    return render(request, 'user/signup.html')
+    return render(request, 'ticket/register.html')
 
 
 def login_view(request):
@@ -337,7 +346,7 @@ def login_view(request):
         else:
             return render(request, 'user/login.html', {'error': 'Invalid username and password'})
 
-    return render(request, 'user/login.html')
+    return render(request, 'ticket/login.html')
 
 def detalleboleta(request, id):
     user = request.user

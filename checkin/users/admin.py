@@ -28,7 +28,7 @@ class RegionAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     fieldsets = (
         (None, {
             'classes': ('suit-tab suit-tab-general',),
-            'fields': ('name', 'country',)
+            'fields': ('name',)
         }),
     )
     suit_form_tabs = (

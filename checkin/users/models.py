@@ -41,22 +41,7 @@ class Etapa(models.Model):
 
     def __str__(self):
         return self.name
-class Localidad(models.Model):
-    name = models.CharField(verbose_name='Nombre ', max_length=254)
-    fecha = models.DateTimeField(auto_now=False, blank=True, null=True)
-    capacity = models.CharField(verbose_name='Capacidad ', max_length=254)
-    etapa = models.ForeignKey(Etapa, verbose_name='Etapa',
-                                      on_delete=models.PROTECT,
-                                      blank=True, null=True)
-    price = models.CharField(verbose_name='Precio ', max_length=254)
-    created = models.DateTimeField(auto_now_add=True)
 
-    class Meta:
-        verbose_name = 'Localidad'
-        verbose_name_plural = 'Localidades'
-
-    def __str__(self):
-        return self.name
 
 class Region(models.Model):
     name = models.CharField(verbose_name='Nombre del departamento', max_length=254)
@@ -149,75 +134,8 @@ class Convencion(models.Model):
     class Meta:
         verbose_name = 'Convencion'
         verbose_name_plural = 'Convenciones'
-class Boleta(models.Model):
-    localidad = models.ForeignKey(Localidad, verbose_name='Localidad',
-                                      on_delete=models.PROTECT,
-                                      blank=True, null=True)
-    capacity = models.CharField(verbose_name='Cantidad idsponible', max_length=254)
-    asientos = models.CharField(verbose_name='Asientos', max_length=254)
-    price = models.CharField(verbose_name='Precio ', max_length=254)
-    leyenda = models.CharField(verbose_name='Leyenda', max_length=254)
-    convencion = models.ForeignKey(Convencion, verbose_name='Localidad',
-                                  on_delete=models.PROTECT,
-                                  blank=True, null=True)
-    comprada = models.CharField(max_length=10, choices=CHOICES, verbose_name='Comprada', null=True,
-                                            blank=True)
-    code = models.ImageField(verbose_name='Imagen de la firma del usuario', upload_to='boleta/code', blank=True,
-                              null=True)
-    created = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        verbose_name = 'BOleta'
-        verbose_name_plural = 'Boleta'
-
-    def __str__(self):
-        return self.capacity
-class CarShop(models.Model):
-    boleta = models.ManyToManyField(Boleta, verbose_name='Boletas',
-                                    blank=True, null=True)
-    comprada = models.CharField(max_length=10, choices=ESTADO_CHOICES, verbose_name='Comprada', null=True,
-                                blank=True)
-    created = models.DateTimeField(auto_now_add=True)
 
 
-    def __str__(self):
-        return str(self.comprada) or ''
-
-    class Meta:
-        verbose_name = 'Carro de compra'
-        verbose_name_plural = 'Carros de compra'
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.PROTECT, blank=True, null=True)
-    car = models.OneToOneField(CarShop,on_delete=models.PROTECT, blank=True, null=True)
-    historialcar = models.ManyToManyField(CarShop, related_name='Historial', blank=True, null=True)
-    email = models.EmailField(max_length=200, verbose_name='Correo electronico', blank=True, null=True)
-    first_name = models.CharField(max_length=200, verbose_name='Nombres', blank=True)
-    last_name = models.CharField(max_length=200, verbose_name='Apellidos', blank=True)
-    type_document = models.ForeignKey(TypeDocument, verbose_name='1.7. TIPO DOCUMENTO IDENTIDAD',
-                                      on_delete=models.PROTECT,
-                                      blank=True, null=True)
-    identification = models.IntegerField( verbose_name='Número de documento', blank=True, null=True)
-    sex = models.CharField(max_length=10, choices=SEX_CHOICES, verbose_name='Sexo', null=True, blank=True)
-    fecha_nacimiento = models.DateTimeField(auto_now=False, blank=True, null=True)
-    phone_number = models.CharField(max_length=20, blank=True)
-    country = models.ForeignKey(Country, verbose_name='País', on_delete=models.CASCADE, blank=True, null=True)
-    state = models.ForeignKey(Region, verbose_name='Departamento', on_delete=models.PROTECT, blank=True, null=True)
-    city = models.ForeignKey(City, verbose_name='Municipio', on_delete=models.PROTECT, blank=True, null=True)
-    adress = models.CharField(verbose_name='Dirección',max_length=100,blank=True, null=True)
-    type_house = models.CharField(verbose_name='Apartamento, unidad,edificio..', max_length=100, blank=True, null=True)
-    neighbord = models.CharField(verbose_name='Barrio', max_length=100, blank=True,
-                                  null=True)
-    boleta = models.ManyToManyField(Boleta, verbose_name='Boletas',
-                                         blank=True, null=True)
-    created = models.DateTimeField(auto_now_add=True)
-
-
-    def __str__(self):
-        return self.first_name
-
-    class Meta:
-        verbose_name = 'Perfil'
-        verbose_name_plural = 'Perfiles'
 
 class Eventos(models.Model):
     title = models.CharField(verbose_name='Título', blank='True', null='True', max_length=200)
@@ -252,12 +170,9 @@ class Eventos(models.Model):
     accesoembarazadas = models.CharField(max_length=10, choices=CHOICES, verbose_name='Acceso a embarazadas', null=True,
                                             blank=True)
     descripcion = models.TextField(verbose_name='Descripción', blank='True', null='True')
-    localidad = models.ManyToManyField(Localidad, verbose_name='Localidad',
-                                      blank=True, null=True)
+
     puntosventa = models.ManyToManyField(Puntosventa, verbose_name='Punto de venta',
                                        blank=True, null=True)
-    boleta = models.ManyToManyField(Boleta, verbose_name='Boletas',
-                                    blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
 
 
@@ -268,7 +183,49 @@ class Eventos(models.Model):
     class Meta:
         verbose_name = 'Evento'
         verbose_name_plural= 'Eventos'
+class Localidad(models.Model):
+    name = models.CharField(verbose_name='Nombre ', max_length=254)
+    fecha = models.DateTimeField(auto_now=False, blank=True, null=True)
+    capacity = models.CharField(verbose_name='Capacidad ', max_length=254)
+    etapa = models.ForeignKey(Etapa, verbose_name='Etapa',
+                                      on_delete=models.PROTECT,
+                                      blank=True, null=True)
+    evento = models.ForeignKey(Eventos, verbose_name='Evento',
+                              on_delete=models.PROTECT,
+                              blank=True, null=True)
 
+    price = models.CharField(verbose_name='Precio ', max_length=254)
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Localidad'
+        verbose_name_plural = 'Localidades'
+
+    def __str__(self):
+        return self.name
+class Boleta(models.Model):
+    localidad = models.ForeignKey(Localidad, verbose_name='Localidad',
+                                      on_delete=models.PROTECT,
+                                      blank=True, null=True)
+    capacity = models.CharField(verbose_name='Cantidad idsponible', max_length=254)
+    asientos = models.CharField(verbose_name='Asientos', max_length=254)
+    price = models.CharField(verbose_name='Precio ', max_length=254)
+    leyenda = models.CharField(verbose_name='Leyenda', max_length=254)
+    convencion = models.ForeignKey(Convencion, verbose_name='Localidad',
+                                  on_delete=models.PROTECT,
+                                  blank=True, null=True)
+    comprada = models.CharField(max_length=10, choices=CHOICES, verbose_name='Comprada', null=True,
+                                            blank=True)
+    code = models.ImageField(verbose_name='Imagen de la firma del usuario', upload_to='boleta/code', blank=True,
+                              null=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'BOleta'
+        verbose_name_plural = 'Boleta'
+
+    def __str__(self):
+        return self.capacity
 class Check(models.Model):
     sucess = models.CharField(max_length=10, verbose_name='satisfactorio', null=True,
                              blank=True)
@@ -282,3 +239,51 @@ class Check(models.Model):
     class Meta:
         verbose_name = 'Revisar'
         verbose_name_plural= 'Revisados'
+class CarShop(models.Model):
+    boleta = models.ManyToManyField(Boleta, verbose_name='Boletas',
+                                    blank=True, null=True)
+    comprada = models.CharField(max_length=10, choices=ESTADO_CHOICES, verbose_name='Comprada', null=True,
+                                blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+
+    def __str__(self):
+        return str(self.comprada) or ''
+
+    class Meta:
+        verbose_name = 'Carro de compra'
+        verbose_name_plural = 'Carros de compra'
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.PROTECT, blank=True, null=True)
+    car = models.OneToOneField(CarShop,on_delete=models.PROTECT, blank=True, null=True)
+    historialcar = models.ManyToManyField(CarShop, related_name='Historial', blank=True, null=True)
+    email = models.EmailField(max_length=200, verbose_name='Correo electronico', blank=True, null=True)
+    first_name = models.CharField(max_length=200, verbose_name='Nombres', blank=True)
+    last_name = models.CharField(max_length=200, verbose_name='Apellidos', blank=True)
+    type_document = models.ForeignKey(TypeDocument, verbose_name='1.7. TIPO DOCUMENTO IDENTIDAD',
+                                      on_delete=models.PROTECT,
+                                      blank=True, null=True)
+    identification = models.IntegerField( verbose_name='Número de documento', blank=True, null=True)
+    sex = models.CharField(max_length=10, choices=SEX_CHOICES, verbose_name='Sexo', null=True, blank=True)
+    fecha_nacimiento = models.DateTimeField(auto_now=False, blank=True, null=True)
+    phone_number = models.CharField(max_length=20, blank=True)
+    country = models.ForeignKey(Country, verbose_name='País', on_delete=models.CASCADE, blank=True, null=True)
+    state = models.ForeignKey(Region, verbose_name='Departamento', on_delete=models.PROTECT, blank=True, null=True)
+    city = models.ForeignKey(City, verbose_name='Municipio', on_delete=models.PROTECT, blank=True, null=True)
+    adress = models.CharField(verbose_name='Dirección',max_length=100,blank=True, null=True)
+    type_house = models.CharField(verbose_name='Apartamento, unidad,edificio..', max_length=100, blank=True, null=True)
+    neighbord = models.CharField(verbose_name='Barrio', max_length=100, blank=True,
+                                  null=True)
+    boleta = models.ManyToManyField(Boleta, verbose_name='Boletas',
+                                         blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+
+    def __str__(self):
+        return self.first_name
+
+    class Meta:
+        verbose_name = 'Perfil'
+        verbose_name_plural = 'Perfiles'
+
