@@ -135,8 +135,35 @@ class Convencion(models.Model):
         verbose_name = 'Convencion'
         verbose_name_plural = 'Convenciones'
 
+class Artista(models.Model):
+    title = models.CharField(verbose_name='Título', max_length=254)
+    image = models.ImageField(verbose_name='Imagen del artista o subevento', upload_to='usuario/firma', blank=True,
+                              null=True)
+    description = models.TextField(verbose_name='Descripción', max_length=254)
+    facebook = models.CharField(verbose_name='Facebook ', max_length=254)
+    instagram = models.CharField(verbose_name='Instagram', max_length=254)
+    tiktok = models.CharField(verbose_name='Tiktok', max_length=254)
+    twitter = models.CharField(verbose_name='Twitter', max_length=254)
+    created = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        verbose_name = 'Artista'
+        verbose_name_plural = 'Artistas'
 
+    def __str__(self):
+        return self.title
+
+class Sponsor(models.Model):
+    title = models.CharField(verbose_name='Título', max_length=254)
+    image = models.ImageField(verbose_name='Sponsor', upload_to='usuario/firma', blank=True,
+                              null=True)
+
+    class Meta:
+        verbose_name = 'Sponsor'
+        verbose_name_plural = 'Sponsors'
+
+    def __str__(self):
+        return self.title
 class Eventos(models.Model):
     title = models.CharField(verbose_name='Título', blank='True', null='True', max_length=200)
     image = models.ImageField(verbose_name='Imagen de la firma del usuario', upload_to='usuario/firma', blank=True,
@@ -173,6 +200,10 @@ class Eventos(models.Model):
 
     puntosventa = models.ManyToManyField(Puntosventa, verbose_name='Punto de venta',
                                        blank=True, null=True)
+    participante = models.ManyToManyField(Artista, verbose_name='Artistas',
+                                         blank=True, null=True)
+    sponsor = models.ManyToManyField(Sponsor, verbose_name='Sponsor',
+                                         blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
 
 

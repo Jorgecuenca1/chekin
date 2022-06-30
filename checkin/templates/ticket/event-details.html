@@ -247,96 +247,35 @@
 <section class="speaker-section padding-bottom padding-top">
 <div class="container">
 <div class="section-header-3">
-<span class="cate">speakers</span>
-<h2 class="title">event speakers</h2>
-<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+<span class="cate">Participantes</span>
+<h2 class="title">Participantes del evento</h2>
+<p></p>
 </div>
 <div class="speaker--slider">
 <div class="speaker-slider owl-carousel owl-theme">
+{% for participante in participantes %}
 <div class="speaker-item">
 <div class="speaker-thumb">
 <a href="event-speaker.html">
-<img src="{% static "assets/img/speaker/1.jpg" %}"  alt="speaker">
+<img src="http://127.0.0.1:8000/media/{{participante.image}}" alt="event">
 </a>
 </div>
 <div class="speaker-content">
 <h5 class="title">
 <a href="event-speaker.html">
-Peggy Wetzel
+    {{participante.title}}
 </a>
 </h5>
-<span>CEO & CO-FOUNDER</span>
+<span>{{participante.title}}</span>
 <div class="speaker-social">
-<a href="#"><i class="fab fa-facebook"></i></a>
+ <a href="{{participante.facebook}}"><i class="fab fa-facebook"></i></a>
 <a href="#"><i class="fab fa-twitter"></i></a>
 <a href="#"><i class="fab fa-instagram"></i></a>
 <a href="#"><i class="fab fa-linkedin"></i></a>
 </div>
 </div>
 </div>
-<div class="speaker-item">
-<div class="speaker-thumb">
-<a href="event-speaker.html">
-<img src="{% static "assets/img/speaker/2.jpg" %}"  alt="speaker">
-</a>
-</div>
-<div class="speaker-content">
-<h5 class="title">
-<a href="event-speaker.html">
-Nicole Belisle
-</a>
-</h5>
-<span>CEO & CO-FOUNDER</span>
-<div class="speaker-social">
- <a href="#"><i class="fab fa-facebook"></i></a>
-<a href="#"><i class="fab fa-twitter"></i></a>
-<a href="#"><i class="fab fa-instagram"></i></a>
-<a href="#"><i class="fab fa-linkedin"></i></a>
-</div>
-</div>
-</div>
-<div class="speaker-item">
-<div class="speaker-thumb">
-<a href="event-speaker.html">
-<img src="{% static "assets/img/speaker/3.jpg" %}"  alt="speaker">
-</a>
-</div>
-<div class="speaker-content">
-<h5 class="title">
-<a href="event-speaker.html">
-Sharon Lewis
-</a>
-</h5>
-<span>CEO & CO-FOUNDER</span>
-<div class="speaker-social">
-<a href="#"><i class="fab fa-facebook"></i></a>
-<a href="#"><i class="fab fa-twitter"></i></a>
-<a href="#"><i class="fab fa-instagram"></i></a>
-<a href="#"><i class="fab fa-linkedin"></i></a>
-</div>
-</div>
-</div>
-<div class="speaker-item">
-<div class="speaker-thumb">
-<a href="event-speaker.html">
-<img src="{% static "assets/img/speaker/4.jpg" %}"  alt="speaker">
-</a>
-</div>
-<div class="speaker-content">
-<h5 class="title">
-<a href="event-speaker.html">
-Frank Johnson
-</a>
-</h5>
-<span>CEO & CO-FOUNDER</span>
-<div class="speaker-social">
-<a href="#"><i class="fab fa-facebook"></i></a>
-<a href="#"><i class="fab fa-twitter"></i></a>
-<a href="#"><i class="fab fa-instagram"></i></a>
-<a href="#"><i class="fab fa-linkedin"></i></a>
-</div>
-</div>
-</div>
+{% endfor %}
 </div>
 <div class="speaker-prev">
 <i class="fal fa-long-arrow-alt-right"></i>
@@ -354,35 +293,17 @@ Frank Johnson
 <div class="section-header-3">
 <span class="cate">SPONSORS</span>
 <h2 class="title">Partners & Sponsors</h2>
-<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout</p>
+<p>Mira los sponsors del evento</p>
 </div>
 <div class="tabTwo sponsor-tab">
 <div class="owl-theme owl-carousel sponsor-slider">
+     {% for sponsor in sponsors %}
 <div class="sponsor-thumb">
 <a href="#">
-<img src="{% static "assets/img/sponsor/01.svg" alt="sponsor">
+<img src="http://127.0.0.1:8000/media/{{sponsor.image}}" alt="event">
 </a>
 </div>
-<div class="sponsor-thumb">
-<a href="#">
-<img src="{% static "assets/img/sponsor/01.svg" alt="sponsor">
-</a>
-</div>
-<div class="sponsor-thumb">
-<a href="#">
-<img src="{% static "assets/img/sponsor/01.svg" alt="sponsor">
-</a>
-</div>
-<div class="sponsor-thumb">
-<a href="#">
-<img src="{% static "assets/img/sponsor/01.svg" alt="sponsor">
-</a>
-</div>
-<div class="sponsor-thumb">
-<a href="#">
-<img src="{% static "assets/img/sponsor/01.svg" alt="sponsor">
-</a>
-</div>
+{% endfor %}
 </div>
 </div>
 </div>

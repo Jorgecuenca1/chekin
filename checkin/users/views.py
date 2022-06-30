@@ -148,7 +148,7 @@ def carshop(request):
     else:
         profile = Profile.objects.get(user=user)
         cars = profile.car
-        boletascars = cars.boleta.all()
+
         carid = profile.car.id
         carshop = CarShop.objects.filter(id=carid).order_by('-id')
         cars = profile.car
@@ -213,6 +213,8 @@ def eventos2(request, id):
     localidades = evento.localidad.all()
     evento = Eventos.objects.get(pk=id)
     boletas = evento.boleta.all()
+    participantes = evento.participante.all()
+    sponsors = evento.sponsor.all()
 
     if request.method == 'POST':
         profile = Profile()
@@ -232,7 +234,7 @@ def eventos2(request, id):
             car.boleta.add(boleta)
         Profile.objects.filter(user=user).update(car=car)
         return redirect(f"/eventos/{id}")
-    return render(request, 'ticket/event-details.html',{ 'eventos': eventos,'boletas':boletas,'localidades':localidades,})
+    return render(request, 'ticket/event-details.html',{ 'eventos': eventos,'boletas':boletas,'localidades':localidades})
 
 def eventos(request, id):
 
@@ -240,7 +242,8 @@ def eventos(request, id):
     evento = Eventos.objects.get(pk=id)
     localidades = Localidad.objects.filter(evento=evento,created__lte=timezone.now()).order_by('created')
     evento = Eventos.objects.get(pk=id)
-
+    participantes = evento.participante.all()
+    sponsors = evento.sponsor.all()
     if request.method == 'POST':
         localidad = localidad = Localidad.objects.get(id=request.POST['localidad'])
         boletas = Boleta.objects.filter(localidad=localidad, created__lte=timezone.now()).order_by('created')
@@ -248,28 +251,25 @@ def eventos(request, id):
         for element in boletas:
             suma = suma + 1
         suma = str(suma)
-        if suma > int(localidad.capacity):
-            return redirect(f"/eventos/{id}")
-        else:
-            queryset = Boleta.objects.annotate(number_of_localidads=Count('localidad'))
-            profile = Profile()
-            user = request.user
-            profile = Profile.objects.get(user=user)
-            user = request.user
+        queryset = Boleta.objects.annotate(number_of_localidads=Count('localidad'))
+        profile = Profile()
+        user = request.user
+        profile = Profile.objects.get(user=user)
+        user = request.user
 
-            if profile.car == None:
-                car = CarShop.objects.create()
-            else:
-                car = profile.car
-            cantidad = int(request.POST['cantidad'])
-            for x in range(cantidad):
-                localidad = localidad=Localidad.objects.get(id=request.POST['localidad'])
-                boleta = Boleta.objects.create(
-                    localidad=Localidad.objects.get(id=request.POST['localidad'],price= localidad.price))
-                car.boleta.add(boleta)
-            Profile.objects.filter(user=user).update(car=car)
-            return redirect(f"/eventos/{id}")
-    return render(request, 'ticket/event-details.html',{ 'eventos': eventos,'localidades':localidades,})
+        if profile.car == None:
+            car = CarShop.objects.create()
+        else:
+            car = profile.car
+        cantidad = int(request.POST['cantidad'])
+        for x in range(cantidad):
+            localidad = localidad=Localidad.objects.get(id=request.POST['localidad'])
+            boleta = Boleta.objects.create(
+                localidad=Localidad.objects.get(id=request.POST['localidad'],price= localidad.price))
+            car.boleta.add(boleta)
+        Profile.objects.filter(user=user).update(car=car)
+        return redirect(f"/eventos/{id}")
+    return render(request, 'ticket/event-details.html',{ 'eventos': eventos,'localidades':localidades,'participantes':participantes,'sponsors':sponsors,})
 def inicio(request):
     eventos = Eventos.objects.filter(created__lte=timezone.now()).order_by('created')
     categorias = Category.objects.filter(created__lte=timezone.now()).order_by('created')
@@ -320,8 +320,8 @@ def signup(request):
         user.last_name = request.POST['last_name']
         user.email = request.POST['email']
         user.save()
-
-        profile = Profile(user=user)
+        car = CarShop.objects.create()
+        profile = Profile(user=user,car=car)
         profile.first_name = request.POST['name']
         profile.last_name = request.POST['name']
         profile.email = request.POST['email']
