@@ -104,39 +104,36 @@ def puntoventa(request, id):
 @login_required(login_url='/login')
 def carshop2(request):
     user = request.user
-    if user == None:
-        return redirect('/inicio')
-    else:
+    profile = Profile.objects.get(user=user)
+    cars = profile.car
+    boletascars = cars.boleta.all()
+    carid = profile.car.id
+    carshop = CarShop.objects.filter(id=carid).order_by('-id')
+    cars = profile.car
+    boletascars = cars.boleta.all()
+    suma = 0
+    for element in boletascars:
+        print(element.id)
+        suma = suma + int(element.localidad.price)
+    suma = str(suma)
+    if request.method == 'POST':
+        profile = Profile()
+        user = request.user
         profile = Profile.objects.get(user=user)
-        cars = profile.car
-        boletascars = cars.boleta.all()
-        carid = profile.car.id
-        carshop = CarShop.objects.filter(id=carid).order_by('-id')
-        cars = profile.car
-        boletascars = cars.boleta.all()
-        suma = 0
-        for element in boletascars:
-            print(element.id)
-            suma = suma + int(element.localidad.price)
-        suma = str(suma)
-        if request.method == 'POST':
-            profile = Profile()
-            user = request.user
-            profile = Profile.objects.get(user=user)
-            user = request.user
+        user = request.user
 
-            if profile.car == None:
-                car = CarShop.objects.create()
-            else:
-                car = profile.car
-            cantidad = int(request.POST['cantidad'])
-            for x in range(cantidad):
-                localidad = localidad = Localidad.objects.get(id=request.POST['localidad'])
-                boleta = Boleta.objects.create(
-                    localidad=Localidad.objects.get(id=request.POST['localidad'], price=localidad.price), price=localidad.price, comprada = 'NO')
-                car.boleta.add(boleta)
-            Profile.objects.filter(user=user).update(car=car)
-            return redirect(f"/carshop2")
+        if profile.car == None:
+            car = CarShop.objects.create()
+        else:
+            car = profile.car
+        cantidad = int(request.POST['cantidad'])
+        for x in range(cantidad):
+            localidad = localidad = Localidad.objects.get(id=request.POST['localidad'])
+            boleta = Boleta.objects.create(
+                localidad=Localidad.objects.get(id=request.POST['localidad'], price=localidad.price), price=localidad.price, comprada = 'NO')
+            car.boleta.add(boleta)
+        Profile.objects.filter(user=user).update(car=car)
+        return redirect(f"/carshop2")
 
     return render(request, 'ticket/event-checkout.html',{'carshop':carshop,'boletascars': boletascars, 'suma': suma,  })
 
@@ -171,9 +168,17 @@ def carshop(request):
             cantidad = int(request.POST['cantidad'])
             for x in range(cantidad):
                 localidad = localidad = Localidad.objects.get(id=request.POST['localidad'])
-                boleta = Boleta.objects.create(
+                boletas = Boleta.objects.filter(localidad=localidad.id,comprada='SI')
+                suma2=0
+                for element in boletascars:
+                    suma2 = suma2 + 1
+                suma2 = suma2 + cantidad
+                if int(localidad.capacity) < suma2:
+                    return redirect('/inicio')
+                else:
+                    boleta = Boleta.objects.create(
                     localidad=Localidad.objects.get(id=request.POST['localidad'], price=localidad.price), price=localidad.price, comprada = 'NO')
-                car.boleta.add(boleta)
+                    car.boleta.add(boleta)
             Profile.objects.filter(user=user).update(car=car)
             return redirect(f"/carshop")
 
