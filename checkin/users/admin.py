@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Country, Region, City, Profile, Eventos, Etapa, Localidad, Category, Puntosventa, Boleta, CarShop, \
-    Check, Artista, Sponsor
+    Check, Artista, Sponsor, Blog
 from import_export.admin import ImportExportModelAdmin
 
 # Register your models here.
@@ -19,10 +19,17 @@ class SponsorAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     search_fields = ('title',)
 
     suit_form_tabs = (
-        ('general', 'Nuevo Participante'),
+        ('general', 'Nuevo SPonsor'),
     )
 
+@admin.register(Blog)
+class BlogAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+    list_display = ('id', 'title',)
+    search_fields = ('title',)
 
+    suit_form_tabs = (
+        ('general', 'Nuevo Blog'),
+    )
 
 @admin.register(Country)
 class CountryAdmin(ImportExportModelAdmin, admin.ModelAdmin):

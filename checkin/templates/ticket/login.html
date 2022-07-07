@@ -4,6 +4,17 @@
 
 <!-- Mirrored from themes.themewild.com/ticket/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 29 Jun 2022 16:32:06 GMT -->
 <head>
+    <!-- Smartsupp Live Chat script -->
+<script type="text/javascript">
+var _smartsupp = _smartsupp || {};
+_smartsupp.key = 'fc71ab08666030bee6ce1e7a691359cbf1aaa317';
+window.smartsupp||(function(d) {
+  var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+  s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+  c.type='text/javascript';c.charset='utf-8';c.async=true;
+  c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+})(document);
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -82,12 +93,12 @@
 <h2 class="title">login</h2>
 <ul class="breadcrumb">
 <li>
-<a href="index-2.html">
-Home
+<a href="/">
+Inicio
 </a>
 </li>
 <li>
-login
+Iniciar sesión
 </li>
 </ul>
 </div>
@@ -100,8 +111,8 @@ login
 <div class="padding-top padding-bottom">
 <div class="account-area">
 <div class="section-header-3">
-<span class="cate">hello !</span>
-<h2 class="title">welcome back</h2>
+<span class="cate">Hola!</span>
+<h2 class="title">Bienvenido</h2>
 </div>
 <form method="POST" action="{% url "login" %}">
         {% csrf_token %}
@@ -115,8 +126,8 @@ login
 </div>
 <div class="form-group checkgroup">
 <input type="checkbox" id="bal2" required checked>
-<label for="bal2">remember me</label>
-<a href="forgot-password.html" class="forget-pass">Forgot Password?</a>
+<label for="bal2">recuerdame</label>
+<a href="forgot-password.html" class="forget-pass">Olvidaste contraseña?</a>
 </div>
 <div class="form-group text-center">
 <button class="btn btn-primary btn-block mt-5" type="submit">Inicio de Sesión!</button>

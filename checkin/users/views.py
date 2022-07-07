@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.db.utils import IntegrityError
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Sum
-from .models import Profile, Localidad, Boleta, CarShop, Check, Category
+from .models import Profile, Localidad, Boleta, CarShop, Check, Category, Blog
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.db.models import Q
@@ -141,7 +141,7 @@ def carshop2(request):
 def carshop(request):
     user = request.user
     if user == None:
-        return redirect('/inicio')
+        return redirect('/')
     else:
         profile = Profile.objects.get(user=user)
         cars = profile.car
@@ -174,7 +174,7 @@ def carshop(request):
                     suma2 = suma2 + 1
                 suma2 = suma2 + cantidad
                 if int(localidad.capacity) < suma2:
-                    return redirect('/inicio')
+                    return redirect('/')
                 else:
                     boleta = Boleta.objects.create(
                     localidad=Localidad.objects.get(id=request.POST['localidad'], price=localidad.price), price=localidad.price, comprada = 'NO')
@@ -277,6 +277,7 @@ def eventos(request, id):
     return render(request, 'ticket/event-details.html',{ 'eventos': eventos,'localidades':localidades,'participantes':participantes,'sponsors':sponsors,})
 def inicio(request):
     eventos = Eventos.objects.filter(created__lte=timezone.now()).order_by('created')
+    blogs = Blog.objects.filter(created__lte=timezone.now()).order_by('created')
     categorias = Category.objects.filter(created__lte=timezone.now()).order_by('created')
     query = request.GET.get('search_box')
     pais = request.GET.get('filter1')
@@ -289,7 +290,7 @@ def inicio(request):
             _connector=Q.OR
         )
         eventos = Eventos.objects.filter(q_obj)
-    return render(request, 'ticket/index.html', { 'eventos': eventos,'categorias': categorias, })
+    return render(request, 'ticket/index.html', { 'eventos': eventos,'categorias': categorias, 'blogs': blogs, })
 def inicio2(request):
     eventos = Eventos.objects.filter(created__lte=timezone.now()).order_by('created')
     categorias = Category.objects.filter(created__lte=timezone.now()).order_by('created')

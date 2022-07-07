@@ -303,15 +303,15 @@
 <div class="col-lg-12">
 <div class="article-section padding-bottom">
 <div class="section-header-1">
-<h2 class="title">movies</h2>
-<a class="view-more" href="movie-grid.html">View More <i class="fal fa-long-arrow-alt-right"></i> </a>
+<h2 class="title">Eventos</h2>
+<a class="view-more" href="#"> <i class="fal fa-long-arrow-alt-right"></i> </a>
 </div>
  <div class="row mb-30-none justify-content-center">
   {% for evento in eventos %}
 <div class="col-sm-6 col-lg-4">
 <div class="movie-grid">
 <div class="movie-thumb c-thumb">
-<a href="#">
+<a href="eventos/{{evento.id}}">
 <img src="media/{{evento.image}}" alt="movie">
 </a>
 </div>
@@ -320,7 +320,7 @@
 <a href="eventos/{{evento.id}}">{{evento.title}}</a>
 </h5>
  <h7 class="title m-0">
-<a href="#">{{evento.descripcion}}</a>
+<a href="eventos/{{evento.id}}">{{evento.descripcion}}</a>
 </h7>
 <ul class="movie-rating-percent">
 <li>
@@ -350,14 +350,15 @@
 <div class="article-section">
 <div class="section-header-1">
 <h2 class="title">Blog</h2>
-<a class="view-more" href="blog.html">View More <i class="fal fa-long-arrow-alt-right"></i> </a>
+<a class="view-more" href="#"> <i class="fal fa-long-arrow-alt-right"></i> </a>
 </div>
 <div class="row mb-30-none justify-content-center">
+ {% for blog in blogs %}
 <div class="col-sm-6 col-lg-4">
 <div class="blog-grid">
 <div class="movie-thumb c-thumb">
 <a href="#">
-<img src="{% static "assets/img/blog/blog-1.jpg" %}" alt="blog">
+<img src="media/{{blog.image}}" alt="blog">
 </a>
 <div class="event-date">
 <h6 class="date-title">11</h6>
@@ -365,54 +366,15 @@
 </div>
 </div>
 <div class="blog-content">
-<h5 class="title">There are many variations of passages</h5>
+<h5 class="title">{{blog.title}}</h5>
 <p>
-It is a long established fact that a reader will be distracted by the readable content of a page
+{{blog.decripcion}}
 </p>
-<a href="#">Read More <i class="fal fa-long-arrow-alt-right"></i></a>
+<a href="#">Leer mas<i class="fal fa-long-arrow-alt-right"></i></a>
 </div>
 </div>
 </div>
-<div class="col-sm-6 col-lg-4">
-<div class="blog-grid">
-<div class="movie-thumb c-thumb">
-<a href="#">
-<img src="{% static "assets/img/blog/blog-2.jpg" %}" alt="blog">
-</a>
-<div class="event-date">
-<h6 class="date-title">11</h6>
-<span>Mar</span>
-</div>
-</div>
-<div class="blog-content">
-<h5 class="title">Contrary to popular belief distracted</h5>
-<p>
-It is a long established fact that a reader will be distracted by the readable content of a page
-</p>
-<a href="#">Read More <i class="fal fa-long-arrow-alt-right"></i></a>
-</div>
-</div>
-</div>
-<div class="col-sm-6 col-lg-4">
-<div class="blog-grid">
-<div class="movie-thumb c-thumb">
-<a href="#">
-<img src="{% static "assets/img/blog/blog-3.jpg" %}" alt="blog">
- </a>
-<div class="event-date">
-<h6 class="date-title">11</h6>
-<span>Mar</span>
-</div>
-</div>
-<div class="blog-content">
-<h5 class="title">Sed ut perspiciatis unde omnis iste</h5>
-<p>
-It is a long established fact that a reader will be distracted by the readable content of a page
-</p>
-<a href="#">Read More <i class="fal fa-long-arrow-alt-right"></i></a>
-</div>
-</div>
-</div>
+ {% endfor %}
 </div>
 </div>
 </div>

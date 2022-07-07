@@ -214,6 +214,29 @@ class Eventos(models.Model):
     class Meta:
         verbose_name = 'Evento'
         verbose_name_plural= 'Eventos'
+
+class Blog(models.Model):
+    title = models.CharField(verbose_name='Título', blank='True', null='True', max_length=200)
+    image = models.ImageField(verbose_name='Imagen de la firma del usuario', upload_to='usuario/firma', blank=True,
+                              null=True)
+    category = models.ForeignKey(Category, verbose_name='Categoría',
+                                      on_delete=models.PROTECT,
+                                      blank=True, null=True)
+    evento = models.ForeignKey(Eventos, verbose_name='Categoría',
+                                 on_delete=models.PROTECT,
+                                 blank=True, null=True)
+    descripcion = models.TextField(verbose_name='Título', blank='True', null='True')
+    created = models.DateTimeField(auto_now_add=True)
+
+
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Blog'
+        verbose_name_plural= 'Blogs'
+
 class Localidad(models.Model):
     name = models.CharField(verbose_name='Nombre ', max_length=254)
     fecha = models.DateTimeField(auto_now=False, blank=True, null=True)
