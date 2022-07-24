@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.db.utils import IntegrityError
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Sum
+
+from .forms import EventosForm
 from .models import Profile, Localidad, Boleta, CarShop, Check, Category, Blog
 from django.shortcuts import render, redirect
 from django.utils import timezone
@@ -33,7 +35,27 @@ from rest_framework import status
 
 from .serializers import CheckSerializer
 
+@login_required(login_url='/login')
+def gestioneventos(request):
+    user = request.user
+    profile = Profile.objects.get(user=user)
+    eventos = profile.eventos.all()
 
+    return render(request, 'ticket/gestioneventos.html', { 'eventos': eventos })
+def faq(request):
+    return render(request, 'ticket/faq.html',)
+
+def terminosycondiciones(request):
+    return render(request, 'ticket/term-condition.html',)
+
+def politicas(request):
+    return render(request, 'ticket/privacy-policy.html',)
+
+def contactanos(request):
+    return render(request, 'ticket/contact.html',)
+
+def nosotros(request):
+    return render(request, 'ticket/about.html',)
 @csrf_exempt
 def payment_done(request):
     return render(request, 'payment_done.html')
@@ -78,13 +100,49 @@ def checkout(request):
         form = CheckoutForm()
         return render(request, 'ecommerce_app/checkout.html', locals())
 
+@login_required(login_url='/login')
+def agregareventos(request):
+    user = request.user
+    profile = Profile.objects.get(user=user)
 
+    profiles = Profile.objects.filter(id=profile.id,created__lte=timezone.now()).order_by('created')
+    if request.method == "POST":
+        form = EventosForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.created = timezone.now()
+            profile=Profile.objects.get(user=user)
+
+            post.save()
+            profile.eventos.add(post)
+            return redirect('perfil')
+    else:
+        form = EventosForm()
+
+    return render(request, 'ticket/agregarevento.html',{'profiles': profiles,'form': form})
+@login_required(login_url='/login')
+def perfil(request):
+    user = request.user
+    profile = Profile.objects.get(user=user)
+    profiles = Profile.objects.filter(id=profile.id,created__lte=timezone.now()).order_by('created')
+
+    eventos = profile.eventos.all()
+
+    return render(request, 'ticket/perfil.html',{ 'eventos': eventos,'profiles': profiles,})
 @login_required(login_url='/login')
 def listaboleta(request):
     user = request.user
     profile = get_object_or_404(Profile,user=user)
     boletas = profile.boleta.all()
     return render(request, 'ticket/event-ticket.html', { 'boletas': boletas, })
+
+@login_required(login_url='/login')
+def reporte(request,id):
+    user = request.user
+    profile = get_object_or_404(Profile,user=user)
+    evento = Eventos.objects.get(id=id)
+    boletas = Boleta.objects.filter(evento=evento,comprada='SI')
+    return render(request, 'ticket/reporte.html', { 'boletas': boletas, })
 def delete_boleta(request, id):
     boleta = get_object_or_404(Boleta, id=id)
     boleta.delete()
@@ -177,7 +235,7 @@ def carshop(request):
                     return redirect('/')
                 else:
                     boleta = Boleta.objects.create(
-                    localidad=Localidad.objects.get(id=request.POST['localidad'], price=localidad.price), price=localidad.price, comprada = 'NO')
+                    localidad=Localidad.objects.get(id=request.POST['localidad'], price=localidad.price), price=localidad.price, comprada = 'NO',evento=localidad.evento)
                     car.boleta.add(boleta)
             Profile.objects.filter(user=user).update(car=car)
             return redirect(f"/carshop")
@@ -329,7 +387,6 @@ def signup(request):
         car = CarShop.objects.create()
         profile = Profile(user=user,car=car)
         profile.first_name = request.POST['name']
-        profile.last_name = request.POST['name']
         profile.email = request.POST['email']
         profile.last_name = request.POST['last_name']
         profile.save()
@@ -337,7 +394,37 @@ def signup(request):
         return redirect('login')
 
     return render(request, 'ticket/register.html')
+def signupEnterprise(request):
+    """Sign up view."""
+    if request.method == 'POST':
+        username = request.POST['username']
+        passwd = request.POST['passwd']
+        passwd_confirmation = request.POST['passwd_confirmation']
 
+        if passwd != passwd_confirmation:
+            return render(request, 'ticket/registerempresa.html', {'error': 'Password confirmation does not match'})
+
+        try:
+            user = User.objects.create_user(username=username, password=passwd)
+        except IntegrityError:
+            return render(request, 'ticket/registerempresa.html', {'error': 'Username is already in user'})
+        user.first_name = request.POST['name']
+        user.last_name = request.POST['last_name']
+        user.email = request.POST['email']
+        user.save()
+
+        profile = Profile(user=user)
+        profile.first_name = request.POST['name']
+        profile.last_name = request.POST['last_name']
+        profile.nit = request.POST['nit']
+        profile.email = request.POST['email']
+        profile.tipo = 'Persona Juridica'
+        profile.razon_social = request.POST['razon']
+        profile.save()
+
+        return redirect('login')
+
+    return render(request, 'ticket/registerempresa.html', )
 
 def login_view(request):
     """Login view."""
@@ -347,7 +434,10 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user:
             login(request, user)
-            return redirect('inicio')
+            if user.profile.tipo == 'Persona Juridica':
+                return redirect('perfil')
+            else:
+                return redirect('inicio')
         else:
             return render(request, 'user/login.html', {'error': 'Invalid username and password'})
 

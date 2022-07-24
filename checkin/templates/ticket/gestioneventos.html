@@ -1,0 +1,295 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from themes.themewild.com/ticket/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 29 Jun 2022 16:29:26 GMT -->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<title>Ticket  - Online Ticket Booking Website HTML5 Template</title>
+
+<link rel="shortcut icon" href="{% static "assets/img/favicon.png" %}"  type="image/x-icon">
+<link rel="stylesheet" href="{% static "assets/css/bootstrap.min.css" %}" >
+<link rel="stylesheet" href="{% static "assets/css/fontawesome.min.css" %}">
+<link rel="stylesheet" href="{% static "assets/css/animate.css" %}">
+<link rel="stylesheet" href="{% static "assets/css/magnific-popup.css" %}">
+<link rel="stylesheet" href="{% static "assets/css/odometer.css" %}">
+<link rel="stylesheet" href="{% static "assets/css/owl.carousel.min.css" %}">
+<link rel="stylesheet" href="{% static "assets/css/owl.theme.default.min.css" %}">
+<link rel="stylesheet" href="{% static "assets/css/nice-select.css" %}">
+<link rel="stylesheet" href="{% static "assets/css/jquery.animatedheadline.css" %}">
+<link rel="stylesheet" href="{% static "assets/css/style.css" %}">
+</head>
+<body>
+
+
+
+
+<div class="overlay"></div>
+<a href="#" class="scrollToTop">
+<i class="fal fa-long-arrow-alt-up"></i>
+</a>
+
+
+<header class="header-section">
+<div class="container">
+<div class="header-wrapper">
+<div class="logo">
+<a href="index-2.html">
+<img src="{% static "assets/img/logo/logo.png" %}" alt="logo">
+</a>
+</div>
+<ul class="menu">
+<li>
+ <a href="/">Inicio</a>
+</li>
+ <li>
+<a href="/listaboleta" >Boletas</a>
+</li>
+ <li>
+<a href="/carshop" >Compra</a>
+</li>
+ <li>
+<a href="/signup" >Registro</a>
+</li>
+<li class="header-button pr-0">
+<a href="/login">Iniciar sesión</a>
+</li>
+</ul>
+<div class="header-bar d-lg-none">
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+</div>
+</header>
+
+
+<section class="banner-section">
+<div class="banner-bg bg-fixed" style="background:url('assets/img/banner/banner-1.jpg')"></div>
+<div class="container">
+<div class="banner-content">
+<h1 class="title  cd-headline clip"><span class="d-block">SEGUIMIENTO</span> DE TUS
+<span class="color-theme cd-words-wrapper p-0 m-0">
+<b class="is-visible">Eventos</b>
+</span>
+</h1>
+<p>Has el seguimiento de tus eventos</p>
+</div>
+</div>
+</section>
+
+
+
+
+
+
+<section class="movie-section padding-top bg-two">
+<div class="container">
+<div class="row flex-wrap-reverse justify-content-center">
+<div class="col-lg-12">
+<div class="article-section padding-bottom">
+<div class="section-header-1">
+<h2 class="title">NO APROBADOS</h2>
+<a class="view-more" href="#"> <i class="fal fa-long-arrow-alt-right"></i> </a>
+</div>
+ <div class="row mb-30-none justify-content-center">
+  {% for evento in eventos %}
+    {% if evento.aprobado == 'NO' %}
+<div class="col-sm-6 col-lg-4">
+<div class="movie-grid">
+<div class="movie-thumb c-thumb">
+<a href="eventos/{{evento.id}}">
+<img src="media/{{evento.image}}" alt="movie">
+</a>
+</div>
+<div class="movie-content">
+<h5 class="title m-0">
+<a href="eventos/{{evento.id}}">{{evento.title}}</a>
+</h5>
+ <h7 class="title m-0">
+<a href="reporte/{{evento.id}}">{{evento.descripcion}}</a>
+</h7>
+<ul class="movie-rating-percent">
+<li>
+<i class="fal fa-shopping-cart"></i>
+<span class="content">{{evento.category}}</span>
+</li>
+<li>
+<i class="fal fa-star"></i>
+<span class="content">{{evento.created}}</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+{% endif %}
+  {% endfor %}
+</section>
+
+
+<section class="movie-section padding-top bg-two">
+<div class="container">
+<div class="row flex-wrap-reverse justify-content-center">
+<div class="col-lg-12">
+<div class="article-section padding-bottom">
+<div class="section-header-1">
+<h2 class="title">APROBADOS</h2>
+<a class="view-more" href="#"> <i class="fal fa-long-arrow-alt-right"></i> </a>
+</div>
+ <div class="row mb-30-none justify-content-center">
+  {% for evento in eventos %}
+    {% if evento.aprobado == 'SI' %}
+<div class="col-sm-6 col-lg-4">
+<div class="movie-grid">
+<div class="movie-thumb c-thumb">
+<a href="reporte/{{evento.id}}">
+<img src="media/{{evento.image}}" alt="movie">
+</a>
+</div>
+<div class="movie-content">
+<h5 class="title m-0">
+<a href="reporte/{{evento.id}}">{{evento.title}}</a>
+</h5>
+ <h7 class="title m-0">
+<a href="reporte/{{evento.id}}">{{evento.descripcion}}</a>
+</h7>
+<ul class="movie-rating-percent">
+<li>
+<i class="fal fa-shopping-cart"></i>
+<span class="content">{{evento.category}}</span>
+</li>
+<li>
+<i class="fal fa-star"></i>
+<span class="content">{{evento.created}}</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+{% endif %}
+  {% endfor %}
+</section>
+
+
+<footer class="footer-section">
+
+<div class="newsletter-section">
+<div class="container">
+<div class="newsletter-container">
+<div class="newsletter-wrapper">
+<a href="/login"><h2>Iniciar sesión</h2></a>
+<h3 class="title"></h3>
+<p>Disfruta de nuestros eventos</p>
+</div>
+</div>
+</div>
+</div>
+
+<div class="footer-section-box">
+<div class="container">
+<div class="footer-top">
+<div class="logo">
+<a href="index-1.html">
+<img src="{% static "assets/img/logo/logo.png" %}" alt="footer">
+</a>
+</div>
+<ul class="social-icons">
+<li>
+<a href="#">
+<i class="fab fa-facebook-f"></i>
+</a>
+</li>
+<li>
+<a href="#" class="active">
+<i class="fab fa-twitter"></i>
+</a>
+</li>
+<li>
+<a href="#">
+<i class="fab fa-pinterest-p"></i>
+</a>
+</li>
+<li>
+<a href="#">
+<i class="fab fa-google"></i>
+</a>
+</li>
+<li>
+<a href="#">
+<i class="fab fa-instagram"></i>
+</a>
+</li>
+</ul>
+</div>
+</div>
+<div class="container">
+<div class="footer-middle">
+<div class="row">
+<div class="col-lg-3">
+<h5 class="footer-middle-title">Quiénes Somos</h5>
+<p class="pb-4 footer-text">
+Somos una empresa que nacio para mejorar la compra masiva de boletos para eventos a nivel mundial.
+</p>
+</div>
+<div class="col-lg-3">
+<h5 class="footer-middle-title">Conozcanos</h5>
+<div class="footer-middle-link">
+<a href="#">Nosotros</a>
+<a href="#">Contactanos</a>
+<a href="#">Preguntas frecuentes</a>
+<a href="#">Terminos y condiciones</a>
+<a href="#">Politica de privacidad</a>
+<a href="#">Ayuda</a>
+</div>
+</div>
+<div class="col-lg-3">
+<h5 class="footer-middle-title">Programa tu evento</h5>
+<div class="footer-middle-link">
+<a href="#">Crear evento</a>
+</div>
+</div>
+<div class="col-lg-3">
+<h5 class="footer-middle-title">GoldCheckin</h5>
+<p class="footer-text"></p>
+<div class="footer-middle-download">
+<a href="#"><img src="{% static "assets/img/app/app_store.jpg" %}" alt=""></a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="container">
+<div class="footer-bottom">
+<div class="footer-bottom-area">
+<div class="left">
+<p> <a href="#">GoldCheckin</a>.</p>
+</div>
+</div>
+</div>
+</div>
+</footer>
+
+
+<script src="{% static "assets/js/jquery-3.6.0.min.js" %}"></script>
+<script src="{% static "assets/js/modernizr-3.6.0.min.js" %}"></script>
+<script src="{% static "assets/js/plugins.js" %}"></script>
+<script src="{% static "assets/js/bootstrap.bundle.min.js" %}"></script>
+<script src="{% static "assets/js/heandline.js" %}"></script>
+<script src="{% static "assets/js/isotope.pkgd.min.js" %}"></script>
+<script src="{% static "assets/js/magnific-popup.min.js" %}"></script>
+<script src="{% static "assets/js/owl.carousel.min.js" %}"></script>
+<script src="{% static "assets/js/wow.min.js" %}"></script>
+<script src="{% static "assets/js/countdown.min.js" %}"></script>
+<script src="{% static "assets/js/odometer.min.js" %}"></script>
+<script src="{% static "assets/js/viewport.jquery.js" %}"></script>
+<script src="{% static "assets/js/nice-select.js" %}"></script>
+<script src="{% static "assets/js/main.js" %}"></script>
+</body>
+
+<!-- Mirrored from themes.themewild.com/ticket/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 29 Jun 2022 16:31:01 GMT -->
+</html>

@@ -14,6 +14,12 @@ ESTADO_CHOICES = (
         ('NOPAGO', 'NOPAGO',),
 
     )
+TIPO_CHOICES = (
+        ('Persona Natural', 'Persona Natural',),
+        ('Persona Juridica', 'Persona Juridica',),
+        ('Caja', 'Caja',),
+
+    )
 # Create your models here.
 class Country(models.Model):
     name = models.CharField(verbose_name='Nombre del país', max_length=254)
@@ -204,6 +210,8 @@ class Eventos(models.Model):
                                          blank=True, null=True)
     sponsor = models.ManyToManyField(Sponsor, verbose_name='Sponsor',
                                          blank=True, null=True)
+    aprobado = models.CharField(max_length=10, choices=CHOICES, verbose_name='Aprobado?', null=True,
+                                  blank=True)
     created = models.DateTimeField(auto_now_add=True)
 
 
@@ -263,6 +271,9 @@ class Boleta(models.Model):
                                       blank=True, null=True)
     capacity = models.CharField(verbose_name='Cantidad idsponible', max_length=254)
     asientos = models.CharField(verbose_name='Asientos', max_length=254)
+    evento = models.ForeignKey(Eventos, verbose_name='Evento',
+                                      on_delete=models.PROTECT,
+                                      blank=True, null=True)
     price = models.CharField(verbose_name='Precio ', max_length=254)
     leyenda = models.CharField(verbose_name='Leyenda', max_length=254)
     convencion = models.ForeignKey(Convencion, verbose_name='Localidad',
@@ -311,6 +322,13 @@ class CarShop(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.PROTECT, blank=True, null=True)
     car = models.OneToOneField(CarShop,on_delete=models.PROTECT, blank=True, null=True)
+    tipo = models.CharField(max_length=100, choices=TIPO_CHOICES,
+                            verbose_name='Tipo de Persona:',
+                            null=True, blank=True)
+    nit = models.CharField(max_length=100, blank=True, verbose_name='Nit', null=True)
+
+    razon_social = models.CharField(max_length=100, blank=True, verbose_name='Razón Social', null=True)
+    eventos = models.ManyToManyField(Eventos, related_name='Eventos', blank=True, null=True)
     historialcar = models.ManyToManyField(CarShop, related_name='Historial', blank=True, null=True)
     email = models.EmailField(max_length=200, verbose_name='Correo electronico', blank=True, null=True)
     first_name = models.CharField(max_length=200, verbose_name='Nombres', blank=True)

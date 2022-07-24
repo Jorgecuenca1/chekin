@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,17 +10,17 @@
 
 <title>Ticket  - Online Ticket Booking Website HTML5 Template</title>
 
-<link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
-<link rel="stylesheet" href="assets/css/bootstrap.min.css">
-<link rel="stylesheet" href="assets/css/fontawesome.min.css">
-<link rel="stylesheet" href="assets/css/animate.css">
-<link rel="stylesheet" href="assets/css/magnific-popup.css">
-<link rel="stylesheet" href="assets/css/odometer.css">
-<link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-<link rel="stylesheet" href="assets/css/owl.theme.default.min.css">
-<link rel="stylesheet" href="assets/css/nice-select.css">
-<link rel="stylesheet" href="assets/css/jquery.animatedheadline.css">
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="shortcut icon" href="{% static "assets/img/favicon.png" %}" type="image/x-icon">
+<link rel="stylesheet" href="{% static "assets/css/bootstrap.min.css" %}">
+<link rel="stylesheet" href="{% static "assets/css/fontawesome.min.css" %}">
+<link rel="stylesheet" href="{% static "assets/css/animate.css" %}">
+<link rel="stylesheet" href="{% static "assets/css/magnific-popup.css" %}">
+<link rel="stylesheet" href="{% static "assets/css/odometer.css" %}">
+<link rel="stylesheet" href="{% static "assets/css/owl.carousel.min.css" %}">
+<link rel="stylesheet" href="{% static "assets/css/owl.theme.default.min.css" %}">
+<link rel="stylesheet" href="{% static "assets/css/nice-select.css" %}">
+<link rel="stylesheet" href="{% static "assets/css/jquery.animatedheadline.css" %}">
+<link rel="stylesheet" href="{% static "assets/css/style.css" %}">
 </head>
 <body>
 
@@ -39,152 +40,30 @@
 </a>
 
 
-<header class="header-section">
+<header class="header-section" style="background-color: #ffffff ;">
+
 <div class="container">
 <div class="header-wrapper">
 <div class="logo">
 <a href="index-2.html">
-<img src="assets/img/logo/logo.png" alt="logo">
+<img src="{% static "assets/img/logo/logo.png" %}" alt="logo">
 </a>
 </div>
 <ul class="menu">
 <li>
-<a href="#" class="active">Home</a>
-<ul class="submenu">
-<li>
-<a href="index-2.html" class="active"> <i class="fal fa-long-arrow-alt-right"></i> Home Demo 01</a>
+ <a href="/">Inicio</a>
 </li>
-<li>
-<a href="index-3.html"> <i class="fal fa-long-arrow-alt-right"></i> Home Demo 02</a>
+ <li>
+<a href="/listaboleta" >Boletas</a>
 </li>
-<li>
-<a href="index-4.html"> <i class="fal fa-long-arrow-alt-right"></i> Home Demo 03</a>
+ <li>
+<a href="/carshop" >Compra</a>
 </li>
-</ul>
-</li>
-<li>
-<a href="#">movies</a>
-<ul class="submenu">
-<li>
-<a href="movie-grid.html"><i class="fal fa-long-arrow-alt-right"></i>Movie Grid</a>
-</li>
-<li>
-<a href="movie-list.html"><i class="fal fa-long-arrow-alt-right"></i>Movie List</a>
-</li>
-<li>
-<a href="movie-details.html"><i class="fal fa-long-arrow-alt-right"></i>Movie Details</a>
-</li>
-<li>
-<a href="movie-details-2.html"><i class="fal fa-long-arrow-alt-right"></i>Movie Details 02</a>
-</li>
-<li>
-<a href="movie-ticket-plan.html"><i class="fal fa-long-arrow-alt-right"></i>Movie Ticket Plan</a>
-</li>
-<li>
-<a href="movie-seat-plan.html"><i class="fal fa-long-arrow-alt-right"></i>Movie Seat Plan</a>
-</li>
-<li>
- <a href="movie-checkout.html"><i class="fal fa-long-arrow-alt-right"></i>Movie Checkout</a>
-</li>
-<li>
-<a href="movie-food.html"><i class="fal fa-long-arrow-alt-right"></i>Movie Food</a>
-</li>
-</ul>
-</li>
-<li>
-<a href="#">events</a>
-<ul class="submenu">
-<li>
-<a href="events.html"><i class="fal fa-long-arrow-alt-right"></i>Events</a>
-</li>
-<li>
-<a href="event-details.html"><i class="fal fa-long-arrow-alt-right"></i>Event Details</a>
-</li>
-<li>
-<a href="event-speaker.html"><i class="fal fa-long-arrow-alt-right"></i>Event Speaker</a>
-</li>
-<li>
-<a href="event-ticket.html"><i class="fal fa-long-arrow-alt-right"></i>Event Ticket</a>
-</li>
-<li>
-<a href="event-checkout.html"><i class="fal fa-long-arrow-alt-right"></i>Event Checkout</a>
-</li>
-</ul>
-</li>
-<li>
-<a href="#">sports</a>
-<ul class="submenu">
-<li>
-<a href="sports.html"><i class="fal fa-long-arrow-alt-right"></i>Sports</a>
-</li>
-<li>
-<a href="sport-details.html"><i class="fal fa-long-arrow-alt-right"></i>Sport Details</a>
-</li>
-<li>
-<a href="sports-ticket.html"><i class="fal fa-long-arrow-alt-right"></i>Sport Ticket</a>
-</li>
-<li>
-<a href="sports-checkout.html"><i class="fal fa-long-arrow-alt-right"></i>Sport Checkout</a>
-</li>
-</ul>
-</li>
-<li>
-<a href="#">pages</a>
-<ul class="submenu">
-<li>
-<a href="about.html"><i class="fal fa-long-arrow-alt-right"></i>About Us</a>
-</li>
-<li>
-<a href="apps-download.html"><i class="fal fa-long-arrow-alt-right"></i>Apps Download</a>
-</li>
-<li>
-<a href="team.html"><i class="fal fa-long-arrow-alt-right"></i>Team</a>
-</li>
-<li>
-<a href="pricing.html"><i class="fal fa-long-arrow-alt-right"></i>Pricing</a>
-</li>
-<li>
-<a href="login.html"><i class="fal fa-long-arrow-alt-right"></i>Login</a>
-</li>
-<li>
-<a href="register.html"><i class="fal fa-long-arrow-alt-right"></i>Register</a>
-</li>
-<li>
-<a href="forgot-password.html"><i class="fal fa-long-arrow-alt-right"></i>Forgot Password</a>
-</li>
-<li>
-<a href="faq.html"><i class="fal fa-long-arrow-alt-right"></i>Faq</a>
-</li>
-<li>
-<a href="term-condition.html"><i class="fal fa-long-arrow-alt-right"></i>Terms & Conditions</a>
-</li>
-<li>
-<a href="privacy-policy.html"><i class="fal fa-long-arrow-alt-right"></i>Privacy Policy</a>
-</li>
-<li>
-<a href="404.html"><i class="fal fa-long-arrow-alt-right"></i>404</a>
-</li>
-</ul>
-</li>
-<li>
-<a href="#">blog</a>
-<ul class="submenu">
-<li>
-<a href="blog.html"><i class="fal fa-long-arrow-alt-right"></i>Blog</a>
-</li>
-<li>
-<a href="blog-2.html"><i class="fal fa-long-arrow-alt-right"></i>Blog 02</a>
-</li>
-<li>
-<a href="blog-details.html"><i class="fal fa-long-arrow-alt-right"></i>Blog Single</a>
-</li>
-</ul>
-</li>
-<li>
-<a href="contact.html">contact</a>
+ <li>
+<a href="/signup" >Registro</a>
 </li>
 <li class="header-button pr-0">
-<a href="login.html">join us</a>
+<a href="/login">Iniciar sesión</a>
 </li>
 </ul>
 <div class="header-bar d-lg-none">
@@ -257,7 +136,7 @@ contact us
 <div class="info-area">
 <div class="info-item">
 <div class="info-thumb">
-<img src="assets/img/contact/phone.png" alt="contact">
+<img src="{% static "assets/img/contact/phone.png" %}" alt="contact">
 </div>
 <div class="info-content">
 <h6 class="title">phone</h6>
@@ -266,7 +145,7 @@ contact us
 </div>
 <div class="info-item">
 <div class="info-thumb">
-<img src="assets/img/contact/email.png" alt="contact">
+<img src="{% static "assets/img/contact/email.png" %}" alt="contact">
 </div>
 <div class="info-content">
 <h6 class="title">Email</h6>
@@ -345,20 +224,15 @@ contact us
 </div>
 </section>
 
-
 <footer class="footer-section">
 
 <div class="newsletter-section">
 <div class="container">
 <div class="newsletter-container">
 <div class="newsletter-wrapper">
-<h5 class="cate">subscribe now</h5>
-<h3 class="title">to get latest update</h3>
-<form class="newsletter-form">
-<input type="text" placeholder="Your Email Address">
-<button type="submit">subscribe</button>
-</form>
-<p>We send you latest update and news to your email</p>
+<a href="/login"><h2>Iniciar sesión</h2></a>
+<h3 class="title">No dudes en comprar tu ticket</h3>
+<p>Disfruta de nuestros eventos</p>
 </div>
 </div>
 </div>
@@ -369,7 +243,7 @@ contact us
 <div class="footer-top">
 <div class="logo">
 <a href="index-1.html">
-<img src="assets/img/logo/logo.png" alt="footer">
+<img src="{% static "assets/img/logo/logo.png" %}" alt="footer">
 </a>
 </div>
 <ul class="social-icons">
@@ -405,40 +279,33 @@ contact us
 <div class="footer-middle">
 <div class="row">
 <div class="col-lg-3">
-<h5 class="footer-middle-title">Company</h5>
+<h5 class="footer-middle-title">Compañia</h5>
 <p class="pb-4 footer-text">
-There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour.
+Somos una empresa que nacio para mejorar la compra masiva de boletos para eventos a nivel mundial.
 </p>
 </div>
 <div class="col-lg-3">
-<h5 class="footer-middle-title">Important Link</h5>
+<h5 class="footer-middle-title">Link importantes</h5>
 <div class="footer-middle-link">
-<a href="#">About Us</a>
-<a href="#">Contact</a>
+<a href="#">Nosotros</a>
+<a href="#">Contactanos</a>
 <a href="#">Faq</a>
-<a href="#">Terms & Conditions</a>
-<a href="#">Privacy Policy</a>
-<a href="#">Help</a>
+<a href="#">Terminos y condiciones</a>
+<a href="#">Politica de privacidad</a>
+<a href="#">Ayuda</a>
 </div>
 </div>
 <div class="col-lg-3">
-<h5 class="footer-middle-title">Quick Browse</h5>
+<h5 class="footer-middle-title">Busqueda rapida</h5>
 <div class="footer-middle-link">
-<a href="#">Support</a>
-<a href="#">Blog</a>
-<a href="#">Movies</a>
-<a href="#">Events</a>
-<a href="#">Sports</a>
-<a href="#">Feedback</a>
+<a href="#">Eventos</a>
 </div>
 </div>
 <div class="col-lg-3">
-<h5 class="footer-middle-title">Download</h5>
-<p class="footer-text">There are many variations of passages of Lorem Ipsum</p>
+<h5 class="footer-middle-title">GOLD CHECKIN</h5>
+<p class="footer-text"></p>
 <div class="footer-middle-download">
-<a href="#"><img src="assets/img/app/app_store.jpg" alt=""></a>
-<a href="#"><img src="assets/img/app/google_play.jpg" alt=""></a>
-<a href="#"> <img src="assets/img/app/windows.jpg" alt=""></a>
+<a href="#"><img src="{% static "assets/img/app/app_store.jpg" %}" alt=""></a>
 </div>
 </div>
 </div>
@@ -449,46 +316,29 @@ There are many variations of passages of Lorem Ipsum available, but the majority
 <div class="footer-bottom">
 <div class="footer-bottom-area">
 <div class="left">
-<p>Copyright © 2021.All Rights Reserved By <a href="#">Ticket</a>.</p>
+<p> <a href="#">Goldticket</a>.</p>
 </div>
-<ul class="links">
-<li>
-<a href="#">About</a>
-</li>
-<li>
-<a href="#">Terms Of Use</a>
-</li>
-<li>
-<a href="#">Privacy Policy</a>
-</li>
-<li>
-<a href="#">FAQ</a>
-</li>
-<li>
-<a href="#">Feedback</a>
-</li>
-</ul>
 </div>
 </div>
 </div>
 </footer>
 
 
-<script data-cfasync="false" src="../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="assets/js/jquery-3.6.0.min.js"></script>
-<script src="assets/js/modernizr-3.6.0.min.js"></script>
-<script src="assets/js/plugins.js"></script>
-<script src="assets/js/bootstrap.bundle.min.js"></script>
-<script src="assets/js/heandline.js"></script>
-<script src="assets/js/isotope.pkgd.min.js"></script>
-<script src="assets/js/magnific-popup.min.js"></script>
-<script src="assets/js/owl.carousel.min.js"></script>
-<script src="assets/js/wow.min.js"></script>
-<script src="assets/js/countdown.min.js"></script>
-<script src="assets/js/odometer.min.js"></script>
-<script src="assets/js/viewport.jquery.js"></script>
-<script src="assets/js/nice-select.js"></script>
- <script src="assets/js/contact-form.js"></script>
-<script src="assets/js/main.js"></script>
+<script data-cfasync="false" src="../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js" %}"></script><script src="{% static "assets/js/jquery-3.6.0.min.js" %}"></script>
+<script src="{% static "assets/js/modernizr-3.6.0.min.js" %}"></script>
+<script src="{% static "assets/js/plugins.js" %}"></script>
+<script src="{% static "assets/js/bootstrap.bundle.min.js" %}"></script>
+<script src="{% static "assets/js/heandline.js" %}"></script>
+<script src="{% static "assets/js/isotope.pkgd.min.js" %}"></script>
+<script src="{% static "assets/js/magnific-popup.min.js" %}"></script>
+<script src="{% static "assets/js/owl.carousel.min.js" %}"></script>
+<script src="{% static "assets/js/wow.min.js" %}"></script>
+<script src="{% static "assets/js/countdown.min.js" %}"></script>
+<script src="{% static "assets/js/odometer.min.js" %}"></script>
+<script src="{% static "assets/js/viewport.jquery.js" %}"></script>
+<script src="{% static "assets/js/nice-select.js" %}"></script>
+ <script src="{% static "assets/js/contact-form.js" %}"></script>
+<script src="{% static "assets/js/main.js" %}"></script>
 </body>
 
 <!-- Mirrored from themes.themewild.com/ticket/contact.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 29 Jun 2022 16:32:17 GMT -->
