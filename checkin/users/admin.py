@@ -1,8 +1,15 @@
 from django.contrib import admin
 from .models import Country, Region, City, Profile, Eventos, Etapa, Localidad, Category, Puntosventa, Boleta, CarShop, \
-    Check, Artista, Sponsor, Blog
+    Check, Artista, Sponsor, Blog, Acomodacion
 from import_export.admin import ImportExportModelAdmin
+@admin.register(Acomodacion)
+class AcomodacionAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+    list_display = ('id', 'name',)
+    search_fields = ('name',)
 
+    suit_form_tabs = (
+        ('general', 'Nuevo Acomodación'),
+    )
 # Register your models here.
 @admin.register(Artista)
 class ArtistaAdmin(ImportExportModelAdmin, admin.ModelAdmin):

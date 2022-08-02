@@ -57,7 +57,7 @@ class Region(models.Model):
         verbose_name_plural = 'Departamentos'
 
     def __str__(self):
-        return '{} | {}'.format(self.country.name, self.name)
+        return '{} '.format(self.name)
 
 
 class City(models.Model):
@@ -68,7 +68,7 @@ class City(models.Model):
         verbose_name_plural = 'Municipios'
 
     def __str__(self):
-        return '{} | {} | {}'.format(self.state.country.name, self.state.name, self.name)
+        return '{} '.format( self.name)
 
     def save(self, *args, **kwargs):
         super(City, self).save(*args, **kwargs)
